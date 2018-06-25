@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'war'
+}
+
+group 'com.epam'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.11.v20180605'
+    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.11.v20180605'
+    compile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '9.4.11.v20180605'
+    compile group: 'org.apache.tomcat', name: 'jasper', version: '6.0.53'
+}
+
+
