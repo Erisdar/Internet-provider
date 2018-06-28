@@ -1,6 +1,6 @@
 package com.epam.internet_provider;
 
-import com.epam.internet_provider.servlet.FirstServlet;
+import com.epam.internet_provider.controller.RegistrationController;
 import org.apache.jasper.servlet.JspServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
@@ -13,7 +13,7 @@ public class Application {
         Server server = new Server(8080);
 
         ServletHandler servletHandler = new ServletHandler();
-        servletHandler.addServletWithMapping(FirstServlet.class, "/hello");
+        servletHandler.addServletWithMapping(RegistrationController.class, "/registration");
         servletHandler.addServletWithMapping(JspServlet.class, "*.jsp");
 
         WebAppContext webAppContext = new WebAppContext();
