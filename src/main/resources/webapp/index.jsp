@@ -60,7 +60,7 @@
                     </form>
                     <form id="register-form" role="form" action="registration" method = "POST" style="display: none;">
                         <div class="form-group">
-                            <input type="text" name="username" id="username" tabindex="1" class="form-control"
+                            <input type="text" name="login" id="login" tabindex="1" class="form-control"
                                    placeholder="Username" value="">
                         </div>
                         <div class="form-group">

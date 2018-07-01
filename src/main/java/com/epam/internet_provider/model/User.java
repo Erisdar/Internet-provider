@@ -7,7 +7,9 @@ public class User {
 
     private String login;
     private String password;
-    private String role;
     private String email;
+    private int role;
+    private int status;
+    private int bonus_amount;
 
 }
