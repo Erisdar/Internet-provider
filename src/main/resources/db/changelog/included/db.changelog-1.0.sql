@@ -18,7 +18,7 @@ COLLATE = utf8_roman_ci;
 CREATE TABLE `internet_provider`.`user` (
   `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(30) CHARACTER SET 'utf8' NOT NULL,
-  `password` CHAR(56) CHARACTER SET 'utf8' NOT NULL,
+  `password` CHAR(79) CHARACTER SET 'utf8' NOT NULL,
   `email` VARCHAR(255) CHARACTER SET 'utf8' NOT NULL,
   `role` TINYINT(1) UNSIGNED NOT NULL,
   `tariff_id` INT UNSIGNED NULL,

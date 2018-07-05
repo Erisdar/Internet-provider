@@ -1,18 +1,32 @@
-import com.epam.internet_provider.connection.DbConnectionPool;
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.BenchmarkRule;
+import com.epam.internet_provider.service.impl.JwtTokeServiceImpl;
+import com.epam.internet_provider.util.HashingUtil;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
-
-import java.sql.Connection;
+import org.junit.rules.MethodRule;
 
 public class DBConfigTest extends Assert {
 
+    @Rule
+    public MethodRule benchmarkRun = new BenchmarkRule();
+
+    @BenchmarkOptions(benchmarkRounds = 10, warmupRounds = 1)
     @Test
-    public void testCreating() throws Exception {
-        DbConnectionPool connectionPool = DbConnectionPool.getInstance();
+    public void testHashing() throws Exception {
+        String pass = "Ария Навсегда";
 
-        Connection connection = connectionPool.getConnection();
-        Connection connection1 = connectionPool.getConnection();
-
-        Assert.assertNotEquals(connection,connection1);
+        String hashedPass = HashingUtil.hashString(pass);
+        System.out.println(hashedPass);
+        System.out.println(HashingUtil.checkString(pass, hashedPass));
     }
+
+    @Test
+    public void testSelect() {
+        JwtTokeServiceImpl jwtTokeService = new JwtTokeServiceImpl();
+
+        System.out.println(jwtTokeService.readToken());
+    }
+
 }
