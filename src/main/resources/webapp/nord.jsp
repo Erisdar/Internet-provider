@@ -20,6 +20,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style/login.css">
     <script src="app/app.js"></script>
+    <script src="app/login.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
 <p>Ха! Ты попал на закрытую страницу!</p>

@@ -20,6 +20,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style/login.css">
     <script src="app/app.js"></script>
+    <script src="app/login.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
 <div class="container w-25 m-auto">
@@ -36,15 +37,15 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <form ng-hide="checked" class="animate-show-hide" role="form">
+                    <form name="signin" ng-submit="login()" ng-hide="checked" class="animate-show-hide" role="form">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="authLogin" tabindex="1" class="form-control"
-                                   placeholder="Username" value="">
+                                   placeholder="Username" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" ng-model="authPassword" tabindex="2"
                                    class="form-control"
-                                   placeholder="Password">
+                                   placeholder="Password" required>
                         </div>
                         <div class="form-group text-center">
                             <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -52,7 +53,7 @@
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-center m-auto">
-                                <input type="submit" ng-click="login()" name="login-submit" tabindex="4"
+                                <input type="submit" name="login-submit" tabindex="4"
                                        class="form-control btn btn-login" value="Log In">
                             </div>
                         </div>
@@ -67,28 +68,30 @@
                             </div>
                         </div>
                     </form>
-                    <form ng-show="checked" class="animate-show-hide" role="form">
+                    <form name="register" ng-submit="registration()" ng-show="checked" class="animate-show-hide"
+                          role="form">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="registrationLogin" tabindex="1"
-                                   class="form-control" placeholder="Username" value="">
+                                   class="form-control" placeholder="Username" required validate-login>
                         </div>
                         <div class="form-group">
                             <input type="email" name="email" ng-model="registrationEmail" tabindex="1"
-                                   class="form-control" placeholder="Email Address" value="">
+                                   class="form-control" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" ng-model="registrationPassword" tabindex="2"
-                                   class="form-control" placeholder="Password">
+                                   class="form-control" placeholder="Password" required>
                         </div>
                         <div class="form-group">
-                            <input type="password" name="confirm-password" tabindex="2" class="form-control"
-                                   placeholder="Confirm Password">
+                            <input type="password" name="password_confirm" ng-model="password_confirm" tabindex="2"
+                                   class="form-control" placeholder="Confirm Password" required
+                                   validate-equals="registrationPassword">
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-center m-auto">
-                                <input type="submit" ng-click="registration()" name="register-submit"
+                                <input type="submit" name="register-submit"
                                        tabindex="4" class="form-control btn btn-register"
-                                       value="Register Now">
+                                       value="Register Now" ng-disabled="register.$invalid">
                             </div>
                         </div>
                     </form>
