@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"}, loadOnStartup = 1)
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
 
     private LoginService loginService = new LoginServiceImpl();

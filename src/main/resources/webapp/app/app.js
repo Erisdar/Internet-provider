@@ -3,13 +3,13 @@
 
     app.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $stateProvider
-            .state('main', {
+            .state('login', {
                 url: '/',
                 templateUrl: 'index.jsp'
             })
-            .state('nord', {
-                url: '/nord',
-                templateUrl: 'nord.jsp'
+            .state('main', {
+                url: '/main',
+                templateUrl: 'main.jsp'
             });
 
         $locationProvider.html5Mode({
@@ -25,7 +25,7 @@
                 if ($location.path() !== "/" && !$localStorage.token) {
                     $window.location.href = '/';
                 } else if ($location.path() === "/" && $localStorage.token) {
-                    $window.location.href = '/nord.jsp';
+                    $window.location.href = '/main.jsp';
                 }
             });
         });

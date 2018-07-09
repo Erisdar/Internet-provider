@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "PrivateServlet", urlPatterns = {"/nord2"}, loadOnStartup = 2)
+@WebServlet(name = "PrivateServlet", urlPatterns = {"/nord2"})
 public class PrivateController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

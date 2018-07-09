@@ -1,11 +1,16 @@
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
+import com.epam.internet_provider.dao.TariffDao;
+import com.epam.internet_provider.dao.impl.TariffDaoImpl;
+import com.epam.internet_provider.model.Tariff;
 import com.epam.internet_provider.service.impl.JwtTokeServiceImpl;
 import com.epam.internet_provider.util.HashingUtil;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.MethodRule;
+
+import java.util.List;
 
 public class DBConfigTest extends Assert {
 
@@ -27,6 +32,15 @@ public class DBConfigTest extends Assert {
         JwtTokeServiceImpl jwtTokeService = new JwtTokeServiceImpl();
 
         System.out.println(jwtTokeService.readToken());
+    }
+
+    @Test
+    public void testTariffDao() {
+        TariffDao tariffDao = new TariffDaoImpl();
+
+        List<Tariff> tariffs = tariffDao.getTariffs();
+
+        tariffs.forEach(System.out::println);
     }
 
 }

@@ -28,7 +28,7 @@ app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $win
                 .then(
                     function (response) {
                         $localStorage.token = response.headers().token;
-                        $window.location.href = '/nord.jsp';
+                        $window.location.href = '/main.jsp';
                     }, function () {
                         alert("Bad login or password");
                         $window.location.href = '/';

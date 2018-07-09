@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RegistrationServlet", urlPatterns = {"/registration"}, loadOnStartup = 1)
+@WebServlet(name = "RegistrationServlet", urlPatterns = {"/registration"})
 public class RegistrationController extends HttpServlet {
 
     private UserDao userDao = new UserDaoImpl();
