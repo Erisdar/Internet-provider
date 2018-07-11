@@ -1,7 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" %>
 <html>
 <head>
-    <title>Main</title>
+    <title>Office</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -16,5 +17,14 @@
 </head>
 <body>
 <jsp:include page="header.jspf"/>
+<jsp:useBean id="userDao" class="com.epam.internet_provider.dao.impl.UserDaoImpl"/>
+<c:set var="user" scope="session" value="${userDao.getUser(login)}"/>
+<div class="balance">
+    <c:out value="Добро пожаловать ${user.login}"/>
+    <c:out value="Остаток счёта: ${user.cash}"/>
+    <c:if test="${role == 1}">
+        <p>Слушаю ваши указания, повелитель.</p>
+    </c:if>
+</div>
 </body>
 </html>

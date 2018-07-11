@@ -27,10 +27,10 @@ public class TariffDaoImpl implements TariffDao {
                     ResultSet result = preparedStatement.executeQuery();
                     List<Tariff> tariffs = new ArrayList<>();
                     while (result.next()) {
-                        tariffs.add(new Tariff(result.getString("title"),
+                        tariffs.add(new Tariff(result.getInt("tariff_id"), result.getString("title"),
                                 result.getInt("cost"),
-                                result.getInt("downloadSpeed"),
-                                result.getInt("uploadSpeed"),
+                                result.getInt("download_speed"),
+                                result.getInt("upload_speed"),
                                 result.getInt("traffic")));
                     }
                     return tariffs;

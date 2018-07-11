@@ -10,7 +10,7 @@ nav {
     overflow-y: hidden;
 }
 
-.table, .table-caption {
+.tariffs-table, .table-caption {
     position: relative;
     top: 10%;
     left: 100px;
@@ -28,4 +28,9 @@ table thead th {
     height: 50px;
     vertical-align: middle;
     padding: 0px;
+}
+
+.balance{
+    position: absolute;
+    left: 20%;
 }

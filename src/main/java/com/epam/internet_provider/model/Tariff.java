@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Tariff {
 
+    private int id;
     private String title;
     private int cost;
     private int downloadSpeed;

@@ -1,6 +1,6 @@
 let app = angular.module("myApp");
 
-app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $window) {
+app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $window, $cookies) {
     $scope.registration = function () {
         getEncryption(function (encrypt) {
             let user = {
@@ -17,7 +17,6 @@ app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $win
                     });
         });
     };
-
     $scope.login = function () {
         getEncryption(function (encrypt) {
             let credentials = {
@@ -28,6 +27,7 @@ app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $win
                 .then(
                     function (response) {
                         $localStorage.token = response.headers().token;
+                        $localStorage.user = response.headers().user;
                         $window.location.href = '/main.jsp';
                     }, function () {
                         alert("Bad login or password");
@@ -35,13 +35,12 @@ app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $win
                     });
         });
     };
-
     $scope.logout = function () {
+        $cookies.remove("token");
         delete $localStorage.token;
         $http.defaults.headers.common = {};
         $window.location.href = '/';
     };
-
     let getEncryption = function (callback) {
         $http.get('/encrypt')
             .then(function (response) {

@@ -10,33 +10,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
-    <script src="//code.angularjs.org/snapshot/angular-animate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <link rel="stylesheet" href="style/main.css">
-    <script src="app/app.js"></script>
 </head>
-
 <body>
-<nav class="nav flex-column nav-pills  text-center navbar-dark bg-dark">
-    <div>
-        <a class="nav-item nav-link" href="main.jsp">Главная</a>
-        <a class="nav-item nav-link active" href="#">Тарифы</a>
-        <a class="nav-item nav-link" href="#">Личный кабинет</a>
-        <a class="nav-item nav-link" href="#">Бонусная программма</a>
-        <a class="nav-item nav-link" href="#">Новости</a>
-        <a class="nav-item nav-link" href="#">Настройки</a>
-        <a class="nav-item nav-link" href="#">О нас</a>
-        <a class="nav-item nav-link" href="#">Выход</a>
-    </div>
-</nav>
+<jsp:include page="header.jspf"/>
 <p class="table-caption">Тарифы</p>
-<table class="table">
+<table class="tariffs-table table">
     <thead class="thead-dark">
     <tr>
         <th scope="col">#</th>
@@ -54,30 +36,30 @@
     </tr>
     </thead>
     <tbody>
-    <jsp:useBean id="tariffDao" class="com.epam.internet_provider.dao.TariffDao" scope="request"/>
-    <%--<c:forEach items="${tariffDao.getTariffs()}" var="tariff">--%>
-    <%--<tr>--%>
-    <%--<td>--%>
-    <%--<c:out value="#"/>--%>
-    <%--</td>--%>
-    <%--<td>--%>
-    <%--<c:out value="${tariff.getTitle()}"/>--%>
-    <%--</td>--%>
-    <%--<td>--%>
-    <%--<c:out value="${tariff.downloadSpeed}"/>/--%>
-    <%--<c:out value="${tariff.uploadSpeed}"/>--%>
-    <%--</td>--%>
-    <%--<td>--%>
-    <%--<c:out value="${tariff.traffic}"/>--%>
-    <%--</td>--%>
-    <%--<td>--%>
-    <%--<c:out value="${tariff.cost}"/>--%>
-    <%--</td>--%>
-    <%--<td>--%>
-    <%--<input type="button" value="Подписаться">--%>
-    <%--</td>--%>
-    <%--</tr>--%>
-    <%--</c:forEach>--%>
+    <jsp:useBean id="tariffDao" class="com.epam.internet_provider.dao.impl.TariffDaoImpl"/>
+    <c:forEach items="${tariffDao.tariffs}" var="tariff" varStatus="tariffLoop">
+        <tr>
+            <td>
+                <c:out value="${tariffLoop.index+1}"/>
+            </td>
+            <td>
+                <c:out value="${tariff.title}"/>
+            </td>
+            <td>
+                <c:out value="${tariff.downloadSpeed}"/>/
+                <c:out value="${tariff.uploadSpeed}"/>
+            </td>
+            <td>
+                <c:out value="${tariff.traffic}"/>
+            </td>
+            <td>
+                <c:out value="${tariff.cost}"/>
+            </td>
+            <td>
+                <input type="button" value="Подписаться + <c:out value="${tariff.id}"/> ">
+            </td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>
 </body>

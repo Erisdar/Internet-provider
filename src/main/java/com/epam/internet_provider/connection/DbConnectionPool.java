@@ -15,7 +15,6 @@ public class DbConnectionPool {
     private static DbConnectionPool instance;
 
     private DbConnectionPool() {
-
         dataSource = new HikariDataSource(new HikariConfig(Objects.requireNonNull(getClass().getClassLoader()
                 .getResource(DB_RESOURCE)).getFile()));
     }

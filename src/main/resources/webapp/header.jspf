@@ -1,0 +1,26 @@
+<%@ page contentType="text/html;charset=utf-8" %>
+<html>
+<head>
+    <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
+    <script src="//code.angularjs.org/snapshot/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-cookies.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/login.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<nav class="nav flex-column nav-pills text-center navbar-dark bg-dark h-100" role="navigation">
+    <div>
+        <a class="nav-item nav-link active" href="main.jsp" target="_self">Главная</a>
+        <a class="nav-item nav-link" href="tariffs.jsp" target="_self">Тарифы</a>
+        <a class="nav-item nav-link" href="office.jsp" target="_self">Личный кабинет</a>
+        <a class="nav-item nav-link" href="#">Бонусная программа</a>
+        <a class="nav-item nav-link" href="#">Новости</a>
+        <a class="nav-item nav-link" href="#">Настройки</a>
+        <a class="nav-item nav-link" href="#">О нас</a>
+        <a class="nav-item nav-link" href="#" ng-click="logout()">Выход</a>
+    </div>
+</nav>
+</body>
+</html>

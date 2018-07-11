@@ -11,6 +11,7 @@ public final class UserUtil {
     private static final int DEFAULT_ROLE = 0;
     private static final int DEFAULT_STATUS = 0;
     private static final int DEFAULT_AMOUNT = 0;
+    private static final int DEFAUL_CASH = 0;
 
     public static User createDefaultUser(JSONObject userJson) {
         User user = new User();
@@ -19,7 +20,8 @@ public final class UserUtil {
         user.setEmail(userJson.getString("email"));
         user.setRole(DEFAULT_ROLE);
         user.setStatus(DEFAULT_STATUS);
-        user.setBonus_amount(DEFAULT_AMOUNT);
+        user.setBonusAmount(DEFAULT_AMOUNT);
+        user.setCash(DEFAUL_CASH);
         return user;
     }
 }
