@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface JwtTokenService {
 
-    String issueToken(String login, int role);
+    String issueToken(String login, String role);
 
     Map<String, String> parseToken(String token);
 

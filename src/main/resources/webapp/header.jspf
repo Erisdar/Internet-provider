@@ -1,24 +1,19 @@
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<head>
-    <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
-    <script src="//code.angularjs.org/snapshot/angular-animate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-cookies.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/login.js"></script>
-</head>
 <body ng-app="myApp" ng-controller="myCtrl">
 <nav class="nav flex-column nav-pills text-center navbar-dark bg-dark h-100" role="navigation">
     <div>
-        <a class="nav-item nav-link active" href="main.jsp" target="_self">Главная</a>
-        <a class="nav-item nav-link" href="tariffs.jsp" target="_self">Тарифы</a>
-        <a class="nav-item nav-link" href="office.jsp" target="_self">Личный кабинет</a>
-        <a class="nav-item nav-link" href="#">Бонусная программа</a>
-        <a class="nav-item nav-link" href="#">Новости</a>
-        <a class="nav-item nav-link" href="#">Настройки</a>
-        <a class="nav-item nav-link" href="#">О нас</a>
+        <a class="nav-item nav-link <c:if test='${param.pageTitle == "main"}'>active</c:if>" id="main"
+           href="main.jsp" target="_self">Главная</a>
+        <a class="nav-item nav-link <c:if test='${param.pageTitle == "tariffs"}'>active</c:if>" id="tariffs"
+           href="tariffs.jsp" target="_self">Тарифы</a>
+        <a class="nav-item nav-link <c:if test='${param.pageTitle == "office"}'>active</c:if>" id="office"
+           href="office.jsp" target="_self">Личный кабинет</a>
+        <a class="nav-item nav-link" id="bonus-program" href="#">Бонусная программа</a>
+        <a class="nav-item nav-link" id="news" href="#">Новости</a>
+        <a class="nav-item nav-link" id="settings" href="#">Настройки</a>
+        <a class="nav-item nav-link" id="about" href="#">О нас</a>
         <a class="nav-item nav-link" href="#" ng-click="logout()">Выход</a>
     </div>
 </nav>

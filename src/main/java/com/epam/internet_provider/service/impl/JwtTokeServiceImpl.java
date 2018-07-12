@@ -27,7 +27,7 @@ public class JwtTokeServiceImpl implements JwtTokenService {
     private static final int EXPIRATION_HOURS = 2;
 
     @Override
-    public String issueToken(String login, int role) {
+    public String issueToken(String login, String role) {
         return Try.of(() -> Jwts.builder()
                 .setExpiration(Date.from(LocalDateTime.now().plusHours(EXPIRATION_HOURS).toInstant(UTC)))
                 .claim("login", login)

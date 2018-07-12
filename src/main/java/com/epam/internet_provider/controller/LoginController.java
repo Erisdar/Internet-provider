@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet {
         User user = loginService.authenticate(JsonUtil.parseCredentials(Try.of(req::getReader).get()));
 
         Try.run(() -> Optional.of(user).ifPresent(user1 -> {
-            String token = jwtTokenService.issueToken(user.getLogin(), user.getRole());
+            String token = jwtTokenService.issueToken(user.getLogin(), user.getRole().name());
             Cookie cookie = new Cookie("token", token);
             cookie.setMaxAge(jwtTokenService.getExpirationTimeInSeconds());
             resp.addCookie(cookie);

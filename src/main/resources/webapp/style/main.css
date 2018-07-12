@@ -1,4 +1,4 @@
-body {
+html {
     overflow-y: scroll;
 }
 
@@ -20,7 +20,7 @@ nav {
     text-align: center;
 }
 
-.table-caption{
+.table-caption {
     font-size: 45px;
 }
 
@@ -30,7 +30,13 @@ table thead th {
     padding: 0px;
 }
 
-.balance{
+.balance {
     position: absolute;
-    left: 20%;
+    top: 20%;
+    right: 10%;
+    font-size: 26px;
+}
+
+.close{
+    right: 5%;
 }

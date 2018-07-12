@@ -2,6 +2,7 @@ package com.epam.internet_provider.dao.impl;
 
 import com.epam.internet_provider.connection.DbConnectionPool;
 import com.epam.internet_provider.dao.UserDao;
+import com.epam.internet_provider.model.Role;
 import com.epam.internet_provider.model.User;
 import io.vavr.control.Try;
 import org.apache.logging.log4j.LogManager;
@@ -28,7 +29,7 @@ public class UserDaoImpl implements UserDao {
                     preparedStatement.setString(1, user.getLogin());
                     preparedStatement.setString(2, user.getPassword());
                     preparedStatement.setString(3, user.getEmail());
-                    preparedStatement.setInt(4, user.getRole());
+                    preparedStatement.setInt(4, user.getRole().getValue());
                     preparedStatement.setInt(5, user.getStatus());
                     preparedStatement.setInt(6, user.getBonusAmount());
                     preparedStatement.setInt(7, user.getCash());
@@ -54,7 +55,7 @@ public class UserDaoImpl implements UserDao {
                         user.setLogin(resultSet.getString("login"));
                         user.setPassword(resultSet.getString("password"));
                         user.setBonusAmount(resultSet.getInt("bonus_amount"));
-                        user.setRole(resultSet.getInt("role"));
+                        user.setRole(Role.getRole(resultSet.getInt("role")));
                         user.setStatus(resultSet.getInt("status"));
                         user.setCash(resultSet.getInt("cash"));
                     }

@@ -9,7 +9,7 @@ public class User {
     private String login;
     private String password;
     private String email;
-    private int role;
+    private Role role;
     private int status;
     private int bonusAmount;
     private int cash;

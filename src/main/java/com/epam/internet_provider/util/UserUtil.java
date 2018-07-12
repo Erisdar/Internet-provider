@@ -1,5 +1,6 @@
 package com.epam.internet_provider.util;
 
+import com.epam.internet_provider.model.Role;
 import com.epam.internet_provider.model.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import org.json.JSONObject;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UserUtil {
 
-    private static final int DEFAULT_ROLE = 0;
+    private static final Role DEFAULT_ROLE = Role.User;
     private static final int DEFAULT_STATUS = 0;
     private static final int DEFAULT_AMOUNT = 0;
     private static final int DEFAUL_CASH = 0;
