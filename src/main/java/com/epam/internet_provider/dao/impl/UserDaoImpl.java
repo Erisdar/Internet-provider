@@ -2,64 +2,178 @@ package com.epam.internet_provider.dao.impl;
 
 import com.epam.internet_provider.connection.DbConnectionPool;
 import com.epam.internet_provider.dao.UserDao;
-import com.epam.internet_provider.model.Role;
-import com.epam.internet_provider.model.User;
+import com.epam.internet_provider.model.*;
 import io.vavr.control.Try;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jooq.impl.DSL;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Types;
+import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger LOG = LogManager.getLogger(UserDaoImpl.class);
-    private static final String INSERT_NEW = "INSERT INTO internet_provider.user " +
-            "(login, password, email, role, status, bonus_amount, cash) VALUES(?,?,?,?,?,?,?)";
-    private static final String SELECT_USER = "SELECT * FROM internet_provider.user where login = ?";
-    private DbConnectionPool connectionPool = DbConnectionPool.getInstance();
+  private static final Logger LOG = LogManager.getLogger(UserDaoImpl.class);
 
-    @Override
-    public boolean registerUser(User user) {
+  private static final String INSERT_NEW =
+      "INSERT INTO internet_provider.user "
+          + "(login, password, email, role, status, bonus_amount, cash) "
+          + "VALUES(?,?,?,?,?,?,?)";
+  private static final String SELECT_USER =
+      "SELECT email, login, bonus_amount, role, status, cash, "
+          + "user.tariff_id, title, cost, download_speed, upload_speed, tariff.traffic "
+          + "FROM internet_provider.user "
+          + "LEFT join internet_provider.tariff on user.tariff_id = tariff.tariff_id "
+          + "where login = ?";
+  private static final String SELECT_PASSWORD =
+      "SELECT password, login, role " + "FROM internet_provider.user " + "where login = ? ";
+  private static final String UPDATE_CASH =
+      "UPDATE internet_provider.user " + "set cash = cash + ? " + "WHERE login = ?";
+  private static final String UPDATE_TARIFF =
+      "UPDATE internet_provider.user "
+          + "inner JOIN internet_provider.tariff ON tariff.tariff_id = ? "
+          + "set user.tariff_id = tariff.tariff_id, cash =  cash - cast(cost as signed) "
+          + "WHERE user.login = ?";
+  private static final String DELETE_TARIFF =
+      "UPDATE internet_provider.user " + "set tariff_id = ? where login = ?";
+  private static final String SELECT_REWARDS =
+      "select reward.reward_id, title, bonus_points, img_href "
+          + "from ((user_2reward inner join reward on reward.reward_id = user_2reward.reward_id) "
+          + "inner join user on user.user_id = user_2reward.user_id) "
+          + "where login = ?";
 
-        Connection connection = connectionPool.getConnection();
+  private DbConnectionPool connectionPool = DbConnectionPool.getInstance();
 
-        return Try.withResources(() -> connection, () -> connection.prepareStatement(INSERT_NEW))
-                .of((connection1, preparedStatement) -> {
-                    preparedStatement.setString(1, user.getLogin());
-                    preparedStatement.setString(2, user.getPassword());
-                    preparedStatement.setString(3, user.getEmail());
-                    preparedStatement.setInt(4, user.getRole().getValue());
-                    preparedStatement.setInt(5, user.getStatus());
-                    preparedStatement.setInt(6, user.getBonusAmount());
-                    preparedStatement.setInt(7, user.getCash());
-                    preparedStatement.execute();
-                    return true;
-                }).getOrElseGet(e -> {
-                    LOG.error("Runtime exception was throw in process of registerUser: ", e);
-                    return false;
-                });
-    }
+  @Override
+  public boolean registerUser(User user) {
 
-    @Override
-    public User getUser(String login) {
-        Connection connection = connectionPool.getConnection();
+    Connection connection = connectionPool.getConnection();
 
-        return Try.withResources(() -> connection, () -> connection.prepareStatement(SELECT_USER))
-                .of((connection1, preparedStatement) -> {
-                    preparedStatement.setString(1, login);
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    User user = new User();
-                    while (resultSet.next()) {
-                        user.setEmail(resultSet.getString("email"));
-                        user.setLogin(resultSet.getString("login"));
-                        user.setPassword(resultSet.getString("password"));
-                        user.setBonusAmount(resultSet.getInt("bonus_amount"));
-                        user.setRole(Role.getRole(resultSet.getInt("role")));
-                        user.setStatus(resultSet.getInt("status"));
-                        user.setCash(resultSet.getInt("cash"));
-                    }
-                    return user;
-                }).getOrElseGet(e -> null);
-    }
+    return Try.withResources(() -> connection, () -> connection.prepareStatement(INSERT_NEW))
+        .of(
+            (connection1, preparedStatement) -> {
+              preparedStatement.setString(1, user.getLogin());
+              preparedStatement.setString(2, user.getPassword());
+              preparedStatement.setString(3, user.getEmail());
+              preparedStatement.setInt(4, user.getRole().getValue());
+              preparedStatement.setInt(5, user.getStatus().getValue());
+              preparedStatement.setInt(6, user.getBonusAmount());
+              preparedStatement.setInt(7, user.getCash());
+              preparedStatement.execute();
+              return true;
+            })
+        .getOrElseGet(
+            e -> {
+              LOG.error("Runtime exception was throw in process of registerUser: ", e);
+              return false;
+            });
+  }
+
+  @Override
+  public User getUser(String login) {
+    return Try.withResources(() -> connectionPool.getConnection())
+        .of(
+            connection ->
+                DSL.using(connection)
+                    .fetchOne(SELECT_USER, login)
+                    .map(
+                        record -> {
+                          User user = new User();
+                          Tariff tariff = new Tariff();
+                          tariff.setId(
+                              Optional.ofNullable(record.getValue("tariff_id", Integer.class))
+                                  .orElse(0));
+                          tariff.setTitle(record.getValue("title", String.class));
+                          tariff.setCost(
+                              Optional.ofNullable(record.getValue("cost", Integer.class))
+                                  .orElse(0));
+                          tariff.setDownloadSpeed(
+                              Optional.ofNullable(record.get("download_speed", Integer.class))
+                                  .orElse(0));
+                          tariff.setUploadSpeed(
+                              Optional.ofNullable(record.getValue("upload_speed", Integer.class))
+                                  .orElse(0));
+                          tariff.setTraffic(
+                              Optional.ofNullable(record.getValue("traffic", Integer.class))
+                                  .orElse(0));
+                          user.setEmail(record.getValue("email", String.class));
+                          user.setLogin(record.getValue("login", String.class));
+                          user.setBonusAmount(record.getValue("bonus_amount", Integer.class));
+                          user.setRole(Role.getRole(record.getValue("role", Integer.class)));
+                          user.setStatus(
+                              Status.getStatus(record.getValue("status", Integer.class)));
+                          user.setTariff(tariff);
+                          user.setCash(record.getValue("cash", Integer.class));
+                          user.setRewards(
+                              DSL.using(connection)
+                                  .fetch(SELECT_REWARDS, login)
+                                  .map(
+                                      reward ->
+                                          new Reward(
+                                              reward.getValue("reward_id", Integer.class),
+                                              reward.getValue("title", String.class),
+                                              reward.getValue("bonus_points", Integer.class),
+                                              reward.getValue("img_href", String.class))));
+                          return user;
+                        }))
+        .getOrNull();
+  }
+
+  @Override
+  public Credentials getCredentials(String login) {
+    Connection connection = connectionPool.getConnection();
+
+    return Try.withResources(() -> connection, () -> connection.prepareStatement(SELECT_PASSWORD))
+        .of(
+            (connection1, preparedStatement) -> {
+              preparedStatement.setString(1, login);
+              ResultSet resultSet = preparedStatement.executeQuery();
+              Credentials credentials = new Credentials();
+              while (resultSet.next()) {
+                credentials.setLogin(resultSet.getString("login"));
+                credentials.setPassword(resultSet.getString("password"));
+                credentials.setRole(Role.getRole(resultSet.getInt("role")));
+              }
+              return credentials;
+            })
+        .getOrNull();
+  }
+
+  @Override
+  public boolean updateCash(String login, int cash) {
+    Connection connection = connectionPool.getConnection();
+
+    return Try.withResources(() -> connection, () -> connection.prepareStatement(UPDATE_CASH))
+        .of(
+            (connection1, preparedStatement) -> {
+              preparedStatement.setInt(1, cash);
+              preparedStatement.setString(2, login);
+              preparedStatement.execute();
+              return true;
+            })
+        .getOrElse(false);
+  }
+
+  @Override
+  public boolean updateTariff(String login, int tariff_id) {
+    Connection connection = connectionPool.getConnection();
+
+    return Try.withResources(
+            () -> connection,
+            () -> connection.prepareStatement(tariff_id < 0 ? DELETE_TARIFF : UPDATE_TARIFF))
+        .of(
+            (connection1, preparedStatement) -> {
+              if (tariff_id < 0) {
+                preparedStatement.setNull(1, Types.NULL);
+              } else {
+                preparedStatement.setInt(1, tariff_id);
+              }
+              preparedStatement.setString(2, login);
+              preparedStatement.execute();
+              return true;
+            })
+        .getOrElse(false);
+  }
 }

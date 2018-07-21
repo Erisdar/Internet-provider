@@ -39,7 +39,6 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.46'
     compile group: 'com.zaxxer', name: 'HikariCP', version: '3.2.0'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.2'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.2'
     compile group: 'org.json', name: 'json', version: '20180130'
@@ -50,6 +49,7 @@ dependencies {
     compile group: 'com.lambdaworks', name: 'scrypt', version: '1.4.0'
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
     compile group: 'jstl', name: 'jstl', version: '1.2'
+    compile group: 'org.jooq', name: 'jooq', version: '3.11.3'
 }
 
 def dbConfig = new Yaml().load(new File("src/main/resources/db.yaml").newInputStream())
@@ -70,6 +70,7 @@ gretty {
     debugSuspend = true
     contextPath = gretty_startPage
     resourceBase = gretty_resourcesPath
+    managedClassReload = true
 }
 
 

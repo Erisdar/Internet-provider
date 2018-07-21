@@ -1,0 +1,64 @@
+@charset "utf-8";
+html {
+    overflow-y: auto;
+}
+
+body {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    padding-left: 200px;
+}
+
+.tariffs-table {
+    text-align: center;
+}
+
+thead {
+    border-top: hidden;
+}
+
+table {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.table-container {
+    width: 90%;
+    text-align: center;
+    margin: 4% auto;
+}
+
+tbody {
+    background-color: rgba(226, 192, 66, 0.84);
+}
+
+.table-caption {
+    font-size: 65px;
+    font-weight: bold;
+}
+
+.not-current-tariff:after {
+    content: "Подключить";
+}
+
+.current-tariff:after {
+    content: "Подключено";
+    pointer-events: none;
+}
+
+.tariff-confirm {
+    font-size: 18px;
+    font-family: 'Cormorant Infant', serif;
+    top: 25%;
+}
+
+.confirm-cancel:hover {
+    background-color: #c5c9cd;
+}
+
+.btn-info:disabled {
+    opacity: 0.9;
+}

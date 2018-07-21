@@ -1,0 +1,33 @@
+html {
+    overflow-y: auto;
+}
+
+.rewards-container {
+    text-align: center;
+    position: relative;
+    left: 100px;
+    margin: auto;
+    height: 100%;
+    width: calc(80% - 200px);
+}
+
+table {
+    background-color: #666666;
+    position: relative;
+    width: 50%;
+    text-align: center;
+}
+
+.reward-img {
+    height: 110px;
+    width: auto;
+}
+
+.check-reward {
+    color: #348190;
+}
+
+.check-reward:hover {
+    color: #007bff;
+    cursor: pointer;
+}

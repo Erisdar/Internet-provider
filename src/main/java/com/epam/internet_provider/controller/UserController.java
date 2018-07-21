@@ -1,16 +1,33 @@
 package com.epam.internet_provider.controller;
 
-import javax.servlet.ServletException;
+import com.epam.internet_provider.dao.UserDao;
+import com.epam.internet_provider.dao.impl.UserDaoImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.vavr.control.Try;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-@WebServlet(name = "UserServlet", urlPatterns = {"/checkData"})
+@WebServlet(
+    name = "UserServlet",
+    urlPatterns = {"/user"})
 public class UserController extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
+
+  private UserDao userDao = new UserDaoImpl();
+
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    Try.run(
+        () -> {
+          response.setContentType("application/json");
+          response
+              .getWriter()
+              .print(
+                  new ObjectMapper()
+                      .writeValueAsString(
+                          userDao.getUser(String.valueOf(request.getAttribute("login")))));
+        });
+  }
 }

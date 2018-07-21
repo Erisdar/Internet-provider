@@ -1,32 +1,32 @@
-let app = angular.module("myApp");
+var app = angular.module("myApp");
 
-app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $window, $cookies) {
-    $scope.registration = function () {
+app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $window, $cookies) {
+    $scope.registration = function (login, email, password) {
         getEncryption(function (encrypt) {
             let user = {
-                login: $scope.registrationLogin,
-                email: $scope.registrationEmail,
-                password: encrypt.encrypt($scope.registrationPassword)
+                login: login,
+                email: email,
+                password: encrypt.encrypt(password)
             };
-            $http.post('/registration', user, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+            $http.post('/registration', user, {headers: {'Content-Type': 'application/json'}})
                 .then(
-                    function () {
-                        $location.path("/");
+                    function (response) {
+                        $localStorage.user = response.headers().user;
+                        $window.location.href = '/main.jsp';
                     }, function () {
                         alert("Bad registration")
                     });
         });
     };
-    $scope.login = function () {
+    $scope.login = function (login, password) {
         getEncryption(function (encrypt) {
             let credentials = {
-                login: $scope.authLogin,
-                password: encrypt.encrypt($scope.authPassword)
+                login: login,
+                password: encrypt.encrypt(password)
             };
-            $http.post('/login', credentials, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+            $http.post('/login', credentials, {headers: {'Content-Type': 'application/json'}})
                 .then(
                     function (response) {
-                        $localStorage.token = response.headers().token;
                         $localStorage.user = response.headers().user;
                         $window.location.href = '/main.jsp';
                     }, function () {
@@ -37,10 +37,11 @@ app.controller("myCtrl", function ($scope, $http, $localStorage, $location, $win
     };
     $scope.logout = function () {
         $cookies.remove("token");
-        delete $localStorage.token;
+        delete $localStorage.user;
         $http.defaults.headers.common = {};
         $window.location.href = '/';
     };
+
     let getEncryption = function (callback) {
         $http.get('/encrypt')
             .then(function (response) {

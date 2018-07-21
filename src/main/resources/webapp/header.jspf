@@ -1,20 +1,20 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<body ng-app="myApp" ng-controller="myCtrl">
-<nav class="nav flex-column nav-pills text-center navbar-dark bg-dark h-100" role="navigation">
+<body>
+<nav ng-app="myApp" ng-controller="loginCtrl" class="nav flex-column nav-pills text-center h-100"
+     role="navigation">
     <div>
-        <a class="nav-item nav-link <c:if test='${param.pageTitle == "main"}'>active</c:if>" id="main"
+        <a class="nav-item nav-btn <c:if test='${param.pageTitle == "main"}'>active</c:if>" id="main"
            href="main.jsp" target="_self">Главная</a>
-        <a class="nav-item nav-link <c:if test='${param.pageTitle == "tariffs"}'>active</c:if>" id="tariffs"
+        <a class="nav-item nav-btn <c:if test='${param.pageTitle == "tariffs"}'>active</c:if>" id="tariffs"
            href="tariffs.jsp" target="_self">Тарифы</a>
-        <a class="nav-item nav-link <c:if test='${param.pageTitle == "office"}'>active</c:if>" id="office"
+        <a class="nav-item nav-btn <c:if test='${param.pageTitle == "office"}'>active</c:if>" id="office"
            href="office.jsp" target="_self">Личный кабинет</a>
-        <a class="nav-item nav-link" id="bonus-program" href="#">Бонусная программа</a>
-        <a class="nav-item nav-link" id="news" href="#">Новости</a>
-        <a class="nav-item nav-link" id="settings" href="#">Настройки</a>
-        <a class="nav-item nav-link" id="about" href="#">О нас</a>
-        <a class="nav-item nav-link" href="#" ng-click="logout()">Выход</a>
+        <a class="nav-item nav-btn <c:if test='${param.pageTitle == "reward"}'>active</c:if>"
+           id="bonus-program"
+           href="reward.jsp" target="_self">Магазин</a>
+        <a class="nav-item nav-btn" href="#" ng-click="logout()">Выход</a>
     </div>
 </nav>
 </body>

@@ -23,7 +23,7 @@
     <script src="app/app.js"></script>
     <script src="app/login.js"></script>
 </head>
-<body ng-app="myApp" ng-controller="myCtrl">
+<body ng-app="myApp" ng-controller="loginCtrl">
 <div class="container w-25 m-auto">
     <div class="panel panel-login p-4">
         <div class="panel-heading">
@@ -38,7 +38,8 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <form name="signin" ng-submit="login()" ng-hide="checked" class="animate-show-hide" role="form">
+                    <form name="signin" ng-submit="login(authLogin, authPassword)" ng-hide="checked"
+                          class="animate-show-hide" role="form">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="authLogin" tabindex="1" class="form-control"
                                    placeholder="Username" required>
@@ -68,8 +69,9 @@
                             </div>
                         </div>
                     </form>
-                    <form name="register" ng-submit="registration()" ng-show="checked" class="animate-show-hide"
-                          role="form">
+                    <form name="register"
+                          ng-submit="registration(registrationLogin, registrationEmail, registrationPassword)"
+                          ng-show="checked" class="animate-show-hide" role="form">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="registrationLogin" tabindex="1"
                                    class="form-control" placeholder="Username" required
@@ -77,18 +79,16 @@
                         </div>
                         <div class="form-group">
                             <input type="email" name="email" ng-model="registrationEmail" tabindex="1"
-                                   class="form-control" placeholder="Email Address"
-                                   required>
+                                   class="form-control" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" ng-model="registrationPassword" tabindex="2"
-                                   class="form-control" placeholder="Password"
-                                   required>
+                                   class="form-control" placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password_confirm" ng-model="password_confirm" tabindex="2"
-                                   class="form-control" placeholder="Confirm Password"
-                                   required validate-equals="registrationPassword">
+                                   class="form-control" placeholder="Confirm Password" required
+                                   validate-equals="registrationPassword">
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-center m-auto">

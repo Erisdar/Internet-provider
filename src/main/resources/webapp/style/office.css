@@ -1,0 +1,181 @@
+html {
+    height: auto;
+}
+
+body {
+    overflow-y: auto;
+    margin-left: 200px;
+    height: auto;
+    max-width: 100%;
+    font-size: 30px;
+}
+
+.balance {
+    position: absolute;
+    text-align: left;
+    top: 300px;
+    right: 50px;
+    height: 210px;
+    width: 300px;
+}
+
+.user-status {
+    position: absolute;
+    top: 50px;
+    right: 4%;
+    width: auto;
+}
+
+.user-name {
+    margin-right: 200px;
+    margin-top: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 52px;
+}
+
+.close {
+    right: 5%;
+}
+
+.tariff-info {
+    width: 500px;
+    position: absolute;
+    top: 200px;
+    left: 250px;
+}
+
+.carousel-container {
+    position: relative;
+    top: 450px;
+    height: auto;
+    width: 100%;
+    margin: auto;
+    padding-right: 200px
+}
+
+.carousel-container img {
+    position: relative;
+    margin: 0;
+    height: 190px;
+    width: auto;
+}
+
+.carousel-inner {
+    text-align: center;
+}
+
+/*.img-container {*/
+/*position: relative;*/
+/*width: 460px;*/
+/*margin: auto;*/
+/*}*/
+
+.carousel-container img:hover {
+    cursor: pointer;
+}
+
+.carousel-item {
+    height: auto;
+    width: 100%;
+}
+
+.carousel-caption {
+    font-size: 36px;
+    position: relative;
+    left: 0;
+    padding-bottom: 0;
+    color: black;
+}
+
+.carousel-indicators {
+    position: relative;
+}
+
+.carousel-indicators li {
+    display: block;
+    width: 48px;
+    height: 48px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-indicators .active {
+    width: 48px;
+    height: 48px;
+    background-color: #54716d;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    margin-top: 80px;
+    height: 100px;
+    width: auto;
+}
+
+.carousel-control-next {
+    margin-right: 15%;
+}
+
+.carousel-control-prev {
+    margin-left: 15%;
+}
+
+.fa-angle-left, .fa-angle-right {
+    color: #54716d;
+    height: 100px;
+    width: auto;
+}
+
+.reward-history-container {
+    position: absolute;
+    top: 80%;
+    left: 70%;
+}
+
+.reward-history-container button {
+    font-size: 40px;
+    color: white;
+    background-color: #54716d;
+    border-radius: 15px 70px 15px;
+}
+
+.reward-history-container button:hover {
+    background-color: #334b47;
+}
+
+.modal {
+    font-family: 'Cormorant Infant', serif;
+}
+
+.modal-payment {
+    font-size: 18px;
+    top: 25%;
+}
+
+.reward-modal img {
+    height: 180px;
+    width: auto;
+}
+
+.close {
+    position: absolute;
+}
+
+.main-info {
+    color: rgba(87, 31, 255, 0.84);
+    display: inline;
+    font-size: 45px;
+}
+
+.lis-img {
+    position: absolute;
+    left: 60%;
+    top: 4%;
+    height: 100px;
+    width: auto;
+}
+

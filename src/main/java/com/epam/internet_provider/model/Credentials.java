@@ -11,5 +11,5 @@ public class Credentials {
     private String login;
     @NonNull
     private String password;
-    private int role;
+    private Role role;
 }

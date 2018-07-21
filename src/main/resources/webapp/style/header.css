@@ -1,0 +1,30 @@
+body {
+    font-family: 'Amatic SC', cursive;
+    background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
+}
+
+nav {
+    width: 200px;
+    top: 0;
+    left: 0;
+    font-size: 32px;
+    position: fixed;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+nav a {
+    display: block;
+}
+
+nav .active {
+    text-decoration: none;
+    font-size: 50px;
+    line-height: 45px;
+    color: #17a2b8;
+}
+
+nav .nav-btn:hover {
+    text-decoration: none;
+    color: #17a2b8;
+}
