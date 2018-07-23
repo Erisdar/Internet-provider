@@ -34,7 +34,7 @@ app.controller("officeCtrl", function ($scope, $http, $localStorage) {
     });
 
     $scope.deactivate = function () {
-        $http.put("/tariff", {tariff_id: -1}, {headers: {'Content-Type': 'application/json'}})
+        $http.put("/user", {tariff_id: -1}, {headers: {'Content-Type': 'application/json'}})
             .then(function () {
                 getUser();
             })

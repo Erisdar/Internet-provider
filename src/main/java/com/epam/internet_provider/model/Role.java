@@ -7,14 +7,12 @@ import java.util.Arrays;
 
 @AllArgsConstructor
 public enum Role {
-    Admin(1), User(0);
+  Admin(1),
+  User(0);
 
-    @Getter
-    private final int value;
+  @Getter private final int value;
 
-    public static Role getRole(int value) {
-        return Arrays.stream(values())
-                .filter(role -> role.value == value)
-                .findFirst().orElse(null);
-    }
+  public static Role getRole(int value) {
+    return Arrays.stream(values()).filter(role -> role.value == value).findFirst().orElse(null);
+  }
 }

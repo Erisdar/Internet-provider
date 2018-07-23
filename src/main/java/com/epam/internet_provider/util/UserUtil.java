@@ -16,7 +16,7 @@ public final class UserUtil {
   private static final int DEFAULT_CASH = 0;
 
   public static User createDefaultUser(JSONObject userJson) {
-    User user = new User();
+    final User user = new User();
     user.setLogin(userJson.getString("login"));
     user.setPassword(
         HashingUtil.hashString(DecryptionUtil.decryptString(userJson.getString("password"))));

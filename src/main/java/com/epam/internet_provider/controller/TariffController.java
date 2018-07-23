@@ -1,31 +1,78 @@
 package com.epam.internet_provider.controller;
 
-import com.epam.internet_provider.dao.UserDao;
-import com.epam.internet_provider.dao.impl.UserDaoImpl;
+import com.epam.internet_provider.dao.TariffDao;
+import com.epam.internet_provider.dao.impl.TariffDaoImpl;
+import com.epam.internet_provider.model.HttpAttribute;
+import com.epam.internet_provider.model.Role;
+import com.epam.internet_provider.util.AttributesUtil;
 import com.epam.internet_provider.util.JsonUtil;
+import com.epam.internet_provider.util.TariffUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vavr.control.Try;
 import org.eclipse.jetty.server.Response;
+import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
+import java.util.function.Function;
 
 @WebServlet(
     name = "TariffServlet",
     urlPatterns = {"/tariff"})
 public class TariffController extends HttpServlet {
 
-  private UserDao userDao = new UserDaoImpl();
+  private TariffDao tariffDao = new TariffDaoImpl();
+
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    Try.run(
+            () -> {
+              response.setContentType("application/json");
+              response
+                  .getWriter()
+                  .print(new ObjectMapper().writeValueAsString(tariffDao.getTariffs()));
+            })
+        .orElseRun(throwable -> response.setStatus(Response.SC_UNAUTHORIZED));
+  }
 
   @Override
   protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-    if (userDao.updateTariff(
-        String.valueOf(req.getAttribute("login")),
-        JsonUtil.parseData(Try.of(req::getReader).get()).getInt("tariff_id"))) {
-      resp.setStatus(Response.SC_OK);
-    } else {
-      resp.setStatus(Response.SC_PAYMENT_REQUIRED);
-    }
+    doAdminAction(
+        req, resp, jsonObject -> tariffDao.updateTariff(TariffUtil.createTariff(jsonObject)));
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    doAdminAction(
+        req, resp, jsonObject -> tariffDao.createTariff(TariffUtil.createTariff(jsonObject)));
+  }
+
+  @Override
+  protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+    doAdminAction(
+        req,
+        resp,
+        jsonObject -> tariffDao.deleteTariff(Integer.parseInt(req.getParameter("tariff_id"))));
+  }
+
+  private void doAdminAction(
+      HttpServletRequest req, HttpServletResponse resp, Function<JSONObject, Boolean> action) {
+    Optional.ofNullable(AttributesUtil.getAttributes(req).getAttribute(HttpAttribute.Role))
+        .filter(role -> role.equals(Role.Admin.name()))
+        .map(
+            role -> {
+              if (!action.apply(JsonUtil.parseData(Try.of(req::getReader).get()))) {
+                resp.setStatus(Response.SC_FORBIDDEN);
+              }
+              return true;
+            })
+        .orElseGet(
+            () -> {
+              resp.setStatus(Response.SC_FORBIDDEN);
+              return false;
+            });
   }
 }

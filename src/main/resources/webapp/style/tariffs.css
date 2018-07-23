@@ -1,14 +1,21 @@
 @charset "utf-8";
 html {
-    overflow-y: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 body {
+    overflow-y: scroll;
+    overflow-x: hidden;
     position: absolute;
     top: 0;
     height: 100%;
     width: 100%;
     padding-left: 200px;
+}
+
+.modal-open {
+    overflow-y: scroll ;
 }
 
 .tariffs-table {
@@ -55,10 +62,29 @@ tbody {
     top: 25%;
 }
 
+.modal {
+    font-size: 18px;
+    font-family: 'Cormorant Infant', serif;
+}
+
 .confirm-cancel:hover {
     background-color: #c5c9cd;
 }
 
 .btn-info:disabled {
     opacity: 0.9;
+}
+
+.create-tariff {
+    font-size: 30px;
+    position: absolute;
+    left: 85%;
+    top: 15%;
+    font-weight: bold;
+    color: #6773ff;
+}
+
+.create-tariff:hover {
+    cursor: pointer;
+    color: #17a2b8;
 }

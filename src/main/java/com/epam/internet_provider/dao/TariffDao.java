@@ -6,6 +6,11 @@ import java.util.List;
 
 public interface TariffDao {
 
-    List<Tariff> getTariffs();
+  List<Tariff> getTariffs();
 
+  boolean createTariff(Tariff tariff);
+
+  boolean updateTariff(Tariff tariff);
+
+  boolean deleteTariff(int id);
 }

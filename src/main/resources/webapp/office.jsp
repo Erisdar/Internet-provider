@@ -31,10 +31,14 @@
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="office"/>
 </jsp:include>
-<p class="user-name"> Привет, {{login}}</p>
-<img class="lis-img" src="img/lis.png" alt="lis">
-<div class="user-status" ng-cloak>
-    <span>Статус: <span class="main-info ">{{user.status}}</span></span>
+<div class="user-info d-flex">
+    <div class="name-img-container">
+        <p class="user-name" ng-cloak> Привет, {{login}}</p>
+        <img class="lis-img" src="img/lis.png" alt="lis">
+    </div>
+    <div class="user-status ng-cloak">
+        <span>Статус: <span class="main-info ">{{user.status}}</span></span>
+    </div>
 </div>
 <div class="balance" ng-cloak>
     <p>Состояние счёта</p>
@@ -57,7 +61,7 @@
     <a href="tariffs.jsp" target="_self">Выбрать тариф</a>
 </div>
 <div class="carousel-container">
-    <div id="carouselIndicators" class="carousel slide" data-ride="carousel" data-interval="3000000">
+    <div id="carouselIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
         <div class="carousel-inner">
             <jsp:useBean id="rewardDao" class="com.epam.internet_provider.dao.impl.RewardDaoImpl"/>
             <c:set var="rewards" value="${rewardDao.rewards}"/>
@@ -91,6 +95,7 @@
         </button>
     </div>
 </div>
+<!-- Modal Payment -->
 <div class="modal fade modal-payment" id="payment" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,7 +119,7 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal Reward-->
 <div class="modal fade reward-modal text-center" id="rewardModal" tabindex="-1" role="dialog"
      aria-labelledby="rewardModalTitle"
      aria-hidden="true">
