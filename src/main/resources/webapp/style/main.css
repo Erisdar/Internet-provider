@@ -1,0 +1,12 @@
+.carousel {
+    position: relative;
+    top: 40%;
+    margin: auto;
+    height: 500px;
+    width: 500px;
+}
+
+.carousel img {
+    height: 400px;
+    width: 500px;
+}

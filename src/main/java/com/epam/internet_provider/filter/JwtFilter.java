@@ -34,7 +34,6 @@ public class JwtFilter implements Filter {
                   .filter(
                       claims -> "role".equals(claims.getKey()) || "login".equals(claims.getKey()))
                   .forEach(claims -> request.setAttribute(claims.getKey(), claims.getValue()));
-
               chain.doFilter(request, response);
             })
         .orElseRun(throwable -> Try.run(() -> ((HttpServletResponse) response).sendRedirect("/")));

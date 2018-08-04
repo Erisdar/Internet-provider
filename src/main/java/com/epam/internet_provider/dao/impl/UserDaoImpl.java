@@ -11,6 +11,7 @@ import org.jooq.impl.DSL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
@@ -27,22 +28,28 @@ public class UserDaoImpl implements UserDao {
           + "FROM internet_provider.user "
           + "LEFT join internet_provider.tariff on user.tariff_id = tariff.tariff_id "
           + "where login = ?";
-  private static final String SELECT_PASSWORD =
-      "SELECT password, login, role " + "FROM internet_provider.user " + "where login = ? ";
+  private static final String SELECT_CREDENTIALS =
+      "SELECT password, login, role, status FROM internet_provider.user where login = ? ";
   private static final String UPDATE_CASH =
-      "UPDATE internet_provider.user " + "set cash = cash + ? " + "WHERE login = ?";
+      "UPDATE internet_provider.user set cash = cash + ? WHERE login = ?";
   private static final String UPDATE_TARIFF =
       "UPDATE internet_provider.user "
           + "inner JOIN internet_provider.tariff ON tariff.tariff_id = ? "
           + "set user.tariff_id = tariff.tariff_id, cash =  cash - cast(cost as signed) "
           + "WHERE user.login = ?";
   private static final String DELETE_TARIFF =
-      "UPDATE internet_provider.user " + "set tariff_id = ? where login = ?";
+      "UPDATE internet_provider.user set tariff_id = ? where login = ?";
   private static final String SELECT_REWARDS =
       "select reward.reward_id, title, bonus_points, img_href "
           + "from ((user_2reward inner join reward on reward.reward_id = user_2reward.reward_id) "
           + "inner join user on user.user_id = user_2reward.user_id) "
           + "where login = ?";
+  private static final String SELECT_USERS =
+      "SELECT login, tariff.title, cash, status "
+          + "FROM internet_provider.user left join tariff on user.tariff_id = tariff.tariff_id "
+          + "where role != 1";
+  private static final String UPDATE_STATUS =
+      "UPDATE internet_provider.user set status = ? where login = ?";
 
   private DbConnectionPool connectionPool = DbConnectionPool.getInstance();
 
@@ -69,6 +76,28 @@ public class UserDaoImpl implements UserDao {
               LOG.error("Runtime exception was throw in process of registerUser: ", e);
               return false;
             });
+  }
+
+  @Override
+  public List<User> getUsers() {
+    return Try.withResources(() -> connectionPool.getConnection())
+        .of(
+            connection ->
+                DSL.using(connection)
+                    .fetch(SELECT_USERS)
+                    .map(
+                        record -> {
+                          User user = new User();
+                          Tariff tariff = new Tariff();
+                          tariff.setTitle(record.getValue("title", String.class));
+                          user.setTariff(tariff);
+                          user.setLogin(record.getValue("login", String.class));
+                          user.setCash(record.getValue("cash", Integer.class));
+                          user.setStatus(
+                              Status.getStatus(record.getValue("status", Integer.class)));
+                          return user;
+                        }))
+        .getOrNull();
   }
 
   @Override
@@ -125,7 +154,8 @@ public class UserDaoImpl implements UserDao {
   public Credentials getCredentials(String login) {
     Connection connection = connectionPool.getConnection();
 
-    return Try.withResources(() -> connection, () -> connection.prepareStatement(SELECT_PASSWORD))
+    return Try.withResources(
+            () -> connection, () -> connection.prepareStatement(SELECT_CREDENTIALS))
         .of(
             (connection1, preparedStatement) -> {
               preparedStatement.setString(1, login);
@@ -135,6 +165,7 @@ public class UserDaoImpl implements UserDao {
                 credentials.setLogin(resultSet.getString("login"));
                 credentials.setPassword(resultSet.getString("password"));
                 credentials.setRole(Role.getRole(resultSet.getInt("role")));
+                credentials.setStatus(Status.getStatus(resultSet.getInt("status")));
               }
               return credentials;
             })
@@ -174,6 +205,13 @@ public class UserDaoImpl implements UserDao {
               preparedStatement.execute();
               return true;
             })
+        .getOrElse(false);
+  }
+
+  @Override
+  public boolean changeStatus(String login, int status) {
+    return Try.withResources(() -> connectionPool.getConnection())
+        .of(connection -> DSL.using(connection).fetch(UPDATE_STATUS, status, login).isNotEmpty())
         .getOrElse(false);
   }
 }

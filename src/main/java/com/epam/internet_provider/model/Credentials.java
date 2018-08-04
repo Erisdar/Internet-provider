@@ -7,9 +7,8 @@ import lombok.*;
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class Credentials {
-    @NonNull
-    private String login;
-    @NonNull
-    private String password;
-    private Role role;
+  @NonNull private String login;
+  @NonNull private String password;
+  private Status status;
+  private Role role;
 }

@@ -10,14 +10,13 @@ import com.epam.internet_provider.util.TariffUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vavr.control.Try;
 import org.eclipse.jetty.server.Response;
-import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 @WebServlet(
     name = "TariffServlet",
@@ -41,30 +40,36 @@ public class TariffController extends HttpServlet {
   @Override
   protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
     doAdminAction(
-        req, resp, jsonObject -> tariffDao.updateTariff(TariffUtil.createTariff(jsonObject)));
+        req,
+        resp,
+        () ->
+            tariffDao.updateTariff(
+                TariffUtil.createTariff(JsonUtil.parseData(Try.of(req::getReader).get()))));
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
     doAdminAction(
-        req, resp, jsonObject -> tariffDao.createTariff(TariffUtil.createTariff(jsonObject)));
+        req,
+        resp,
+        () ->
+            tariffDao.createTariff(
+                TariffUtil.createTariff(JsonUtil.parseData(Try.of(req::getReader).get()))));
   }
 
   @Override
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
     doAdminAction(
-        req,
-        resp,
-        jsonObject -> tariffDao.deleteTariff(Integer.parseInt(req.getParameter("tariff_id"))));
+        req, resp, () -> tariffDao.deleteTariff(Integer.parseInt(req.getParameter("tariff_id"))));
   }
 
   private void doAdminAction(
-      HttpServletRequest req, HttpServletResponse resp, Function<JSONObject, Boolean> action) {
+      HttpServletRequest req, HttpServletResponse resp, Supplier<Boolean> action) {
     Optional.ofNullable(AttributesUtil.getAttributes(req).getAttribute(HttpAttribute.Role))
         .filter(role -> role.equals(Role.Admin.name()))
         .map(
             role -> {
-              if (!action.apply(JsonUtil.parseData(Try.of(req::getReader).get()))) {
+              if (!action.get()) {
                 resp.setStatus(Response.SC_FORBIDDEN);
               }
               return true;

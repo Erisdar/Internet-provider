@@ -19,8 +19,10 @@ FOR EACH ROW
   begin
     IF NEW.cash < 0 and NEW.status = 1 THEN
 			set NEW.status = 2;
-	  elseif NEW.cash > 0 and NEW.status = 2 THEN
+	  elseif NEW.cash > 0 and NEW.status = 2 and NEW.tariff_id is not null THEN
 			set NEW.status = 1;
+		elseif NEW.cash > 0 and NEW.status = 2 and NEW.tariff_id is null THEN
+		  set NEW.status = 0;
 	  END IF;
   end;
 

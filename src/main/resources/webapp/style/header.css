@@ -1,5 +1,18 @@
+html {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 body {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-left: 200px;
+    max-width: 100%;
+    font-size: 30px;
     font-family: 'Amatic SC', cursive;
+    height: auto;
     background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
 }
 
@@ -27,4 +40,8 @@ nav .active {
 nav .nav-btn:hover {
     text-decoration: none;
     color: #17a2b8;
+}
+
+.modal-open {
+    overflow-y: auto
 }

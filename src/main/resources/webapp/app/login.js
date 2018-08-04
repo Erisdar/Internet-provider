@@ -1,6 +1,13 @@
 var app = angular.module("myApp");
 
-app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $window, $cookies) {
+app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $window, $cookies, $translate) {
+    $scope.userName = $localStorage.user;
+    $scope.role = $localStorage.role;
+
+    $scope.changeLanguage = function (langKey) {
+        $translate.use(langKey);
+    };
+
     $scope.registration = function (login, email, password) {
         getEncryption(function (encrypt) {
             let user = {
@@ -12,6 +19,7 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                 .then(
                     function (response) {
                         $localStorage.user = response.headers().user;
+                        $localStorage.role = response.headers().role;
                         $window.location.href = '/main.jsp';
                     }, function () {
                         alert("Bad registration")
@@ -28,10 +36,10 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                 .then(
                     function (response) {
                         $localStorage.user = response.headers().user;
+                        $localStorage.role = response.headers().role;
                         $window.location.href = '/main.jsp';
                     }, function () {
                         alert("Bad login or password");
-                        $window.location.href = '/';
                     });
         });
     };
@@ -61,7 +69,6 @@ app.directive('validateEquals', function () {
                 ngModelCtrl.$setValidity('equal', valid);
                 return valid ? value : 'undefined';
             }
-
             ngModelCtrl.$parsers.push(validateEqual);
         }
     };
@@ -80,7 +87,6 @@ app.directive('validateLogin', function () {
                 };
                 return valid ? value : 'undefined';
             }
-
             ngModelCtrl.$parsers.push(validateLogin);
         }
     };

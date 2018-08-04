@@ -1,19 +1,4 @@
 @charset "utf-8";
-html {
-    overflow-y: hidden;
-    overflow-x: hidden;
-}
-
-body {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    padding-left: 200px;
-}
-
 .modal-open {
     overflow-y: scroll ;
 }
@@ -29,7 +14,6 @@ thead {
 table {
     font-size: 30px;
     font-weight: bold;
-    color: #000000;
 }
 
 .table-container {
@@ -47,23 +31,9 @@ tbody {
     font-weight: bold;
 }
 
-.not-current-tariff:after {
-    content: "Подключить";
-}
-
-.current-tariff:after {
-    content: "Подключено";
-    pointer-events: none;
-}
-
-.tariff-confirm {
-    font-size: 18px;
-    font-family: 'Cormorant Infant', serif;
-    top: 25%;
-}
-
 .modal {
-    font-size: 18px;
+    top: 25%;
+    font-size: 20px;
     font-family: 'Cormorant Infant', serif;
 }
 
@@ -87,4 +57,12 @@ tbody {
 .create-tariff:hover {
     cursor: pointer;
     color: #17a2b8;
+}
+
+.admin-button:hover{
+    background-color: #cacece;
+}
+
+i {
+    margin-right: 5px;
 }

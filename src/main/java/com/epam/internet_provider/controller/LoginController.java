@@ -37,7 +37,8 @@ public class LoginController extends HttpServlet {
                           resp.addCookie(
                               CookieUtil.createCookie(
                                   credentials.getLogin(), credentials.getRole()));
-                          resp.setHeader("User", credentials.getLogin());
+                          resp.setHeader("user", credentials.getLogin());
+                          resp.setHeader("role", credentials.getRole().name());
                           resp.setStatus(Response.SC_OK);
                         }))
         .orElseRun(throwable -> resp.setStatus(Response.SC_FORBIDDEN));

@@ -1,6 +1,7 @@
 package com.epam.internet_provider.util;
 
 import com.epam.internet_provider.model.Tariff;
+import io.vavr.control.Try;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 public final class TariffUtil {
   public static Tariff createTariff(JSONObject tariffJson) {
     final Tariff tariff = new Tariff();
+    tariff.setId(Try.of(() -> tariffJson.getInt("id")).getOrElse(0));
     tariff.setTitle(tariffJson.getString("title"));
     tariff.setDownloadSpeed(tariffJson.getInt("downloadSpeed"));
     tariff.setUploadSpeed(tariffJson.getInt("uploadSpeed"));

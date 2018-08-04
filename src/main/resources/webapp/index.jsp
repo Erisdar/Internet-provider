@@ -16,6 +16,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
@@ -24,46 +28,47 @@
     <script src="app/login.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="loginCtrl">
-<div class="container w-25 m-auto">
-    <div class="panel panel-login p-4">
+<div class="container m-auto">
+    <div class="panel panel-login p-4" ng-cloak>
         <div class="panel-heading">
             <div class="row d-flex justify-content-around" ng-init="active=true">
                 <a href="#" ng-class="{'active': active === true}" ng-click="checked=false; active=!active"
-                   class="login-form-link">Login</a>
+                   class="login-form-link">{{'LOGIN'| translate}}</a>
                 <a href="#" ng-class="{'active': active === false}" ng-click="checked=true; active=!active"
-                   class="register-form-link">Register</a>
+                   class="register-form-link">{{'REGISTRATION'| translate}}</a>
             </div>
             <hr>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" ng-cloak>
             <div class="row">
                 <div class="col-lg-12">
                     <form name="signin" ng-submit="login(authLogin, authPassword)" ng-hide="checked"
                           class="animate-show-hide" role="form">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="authLogin" tabindex="1" class="form-control"
-                                   placeholder="Username" required>
+                                   placeholder="{{'USERNAME'| translate}}" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" ng-model="authPassword" tabindex="2"
-                                   class="form-control" placeholder="Password" required>
+                                   class="form-control" placeholder="{{'PASSWORD'| translate}}" required>
                         </div>
                         <div class="form-group text-center">
                             <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                            <label for="remember"> Remember Me</label>
+                            <label for="remember" translate="REMEMBER_ME"></label>
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-center m-auto">
-                                <input type="submit" name="login-submit" tabindex="4" class="form-control btn btn-login"
-                                       value="Log In">
+                                <button type="submit" name="login-submit" tabindex="4"
+                                        class="form-control btn btn-login"
+                                        translate="LOGIN"></button>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="text-center">
-                                        <a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot
-                                            Password?</a>
+                                        <a href="#" tabindex="5" class="forgot-password"
+                                           translate="FORGOT_PASSWORD"></a>
                                     </div>
                                 </div>
                             </div>
@@ -74,27 +79,27 @@
                           ng-show="checked" class="animate-show-hide" role="form">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="registrationLogin" tabindex="1"
-                                   class="form-control" placeholder="Username" required
+                                   class="form-control" placeholder="{{'USERNAME'| translate}}" required
                                    validate-login>
                         </div>
                         <div class="form-group">
                             <input type="email" name="email" ng-model="registrationEmail" tabindex="1"
-                                   class="form-control" placeholder="Email Address" required>
+                                   class="form-control" placeholder="{{'EMAIL_ADDRESS'| translate}}" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" ng-model="registrationPassword" tabindex="2"
-                                   class="form-control" placeholder="Password" required>
+                                   class="form-control" placeholder="{{'PASSWORD'| translate}}" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password_confirm" ng-model="password_confirm" tabindex="2"
-                                   class="form-control" placeholder="Confirm Password" required
+                                   class="form-control" placeholder="{{'CONFIRM_PASSWORD'| translate}}" required
                                    validate-equals="registrationPassword">
                         </div>
                         <div class="form-group">
                             <div class="d-flex justify-content-center m-auto">
-                                <input type="submit" name="register-submit" tabindex="4"
-                                       class="form-control btn btn-register" value="Register Now"
-                                       ng-disabled="register.$invalid">
+                                <button type="submit" name="register-submit" tabindex="4"
+                                        class="form-control btn btn-register"
+                                        ng-disabled="register.$invalid" translate="REGISTER_NOW"></button>
                             </div>
                         </div>
                     </form>

@@ -1,7 +1,7 @@
 var app = angular.module("myApp");
 
-app.controller("tariffCtrl", function ($scope, $http, $window) {
-
+app.controller("tariffCtrl", function ($scope, $http) {
+    var self = this;
     $scope.user = null;
     $scope.tariffs = null;
 
@@ -23,42 +23,31 @@ app.controller("tariffCtrl", function ($scope, $http, $window) {
             })
     };
 
-    $scope.activate = function (id, cost, title) {
-        bootbox.confirm({
-            title: "Подключить тариф " + title + "?",
-            className: 'tariff-confirm',
-            closeButton: false,
-            message: "С вашего счёта будет списано " + cost + " рублей",
-            buttons: {
-                cancel: {
-                    className: 'confirm-cancel',
-                    label: '<i class="fa fa-times"></i> Отмена'
-                },
-                confirm: {
-                    className: 'btn-info',
-                    label: '<i class="fa fa-check"></i> Подключить'
-                }
-            },
-            callback: function (result) {
-                if (result) {
-                    $http.put("/user", {tariff_id: id}, {headers: {'Content-Type': 'application/json'}})
-                        .then(function () {
-                            getUser();
-                        }, function () {
-                            alert("You are Blocked! Ha-ha!")
-                        });
-                }
-            }
-        });
+    $scope.runActivateModal = function (id, title, cost) {
+        self.connectedTariffId = id;
+        self.connectedTariffTitle = title;
+        self.connectedTariffCost = cost;
+        $('#connect').modal('show');
     };
 
-    $scope.runChangeModal = function (title, downloadSpeed, uploadSpeed, traffic, cost) {
-        $scope.currentTariffTitle = title;
-        $scope.changingTitle = title;
-        $scope.changingDownloadSpeed = downloadSpeed;
-        $scope.changingUploadSpeed = uploadSpeed;
-        $scope.changingTraffic = traffic;
-        $scope.changingCost = cost;
+    $scope.activate = function (id) {
+        $http.put("/user", {tariff_id: id}, {headers: {'Content-Type': 'application/json'}})
+            .then(function () {
+                getUser();
+                $('#connect').modal('hide');
+            }, function () {
+                alert("You are Blocked! Ha-ha!")
+            });
+    };
+
+    $scope.runChangeModal = function (id, title, downloadSpeed, uploadSpeed, traffic, cost) {
+        self.changingTariffId = id;
+        self.changingTariffTitle = title;
+        self.changingTitle = title;
+        self.changingDownloadSpeed = downloadSpeed;
+        self.changingUploadSpeed = uploadSpeed;
+        self.changingTraffic = traffic;
+        self.changingCost = cost;
         $('#changeTariffModal').modal('show');
     };
 
@@ -81,6 +70,7 @@ app.controller("tariffCtrl", function ($scope, $http, $window) {
 
     $scope.changeTariff = function (title, downloadSpeed, uploadSpeed, traffic, cost) {
         let tariff = {
+            id: self.changingTariffId,
             title: title,
             downloadSpeed: downloadSpeed,
             uploadSpeed: uploadSpeed,
@@ -129,4 +119,5 @@ app.controller("tariffCtrl", function ($scope, $http, $window) {
         getUser();
         getTarrifs();
     });
-});
+})
+;

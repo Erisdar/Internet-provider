@@ -3,6 +3,7 @@ package com.epam.internet_provider.service.impl;
 import com.epam.internet_provider.dao.UserDao;
 import com.epam.internet_provider.dao.impl.UserDaoImpl;
 import com.epam.internet_provider.model.Credentials;
+import com.epam.internet_provider.model.Status;
 import com.epam.internet_provider.service.LoginService;
 import com.epam.internet_provider.util.DecryptionUtil;
 import com.epam.internet_provider.util.HashingUtil;
@@ -15,12 +16,13 @@ public class LoginServiceImpl implements LoginService {
 
   @Override
   public Credentials authenticate(Credentials authData) {
-    return Optional.ofNullable(userDao.getCredentials(authData.getLogin()))
+    return Optional.of(userDao.getCredentials(authData.getLogin()))
         .filter(
             credentials ->
                 HashingUtil.checkString(
-                    DecryptionUtil.decryptString(authData.getPassword()),
-                    credentials.getPassword()))
-        .orElse(null);
+                        DecryptionUtil.decryptString(authData.getPassword()),
+                        credentials.getPassword())
+                    && credentials.getStatus() != Status.Banned)
+        .orElseThrow(IllegalStateException::new);
   }
 }
