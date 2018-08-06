@@ -15,12 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-cookies.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-
     <script src="app/app.js"></script>
     <script src="app/login.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -34,23 +32,26 @@
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="main"/>
 </jsp:include>
-<div id="carouselControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img class="d-block" src="img/boy.jpg" alt="First slide">
+<div class="d-flex justify-content-center carousel-container">
+    <div id="carouselControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block" src="img/boy.jpg" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block" src="img/letaet-vo-sne.jpg" alt="Second slide">
+            </div>
         </div>
-        <div class="carousel-item">
-            <img class="d-block" src="img/letaet-vo-sne.jpg" alt="Second slide">
-        </div>
+        <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-    <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
 </div>
+<img src="img/bird.jpg" class="bird-img" alt="Bird">
 </body>
 </html>

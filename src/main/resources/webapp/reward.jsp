@@ -41,7 +41,6 @@
 </jsp:include>
 <div class="rewards-container">
     <h1 translate="SHOP"></h1>
-    <br>
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
@@ -61,7 +60,7 @@
                     <td class="align-middle p-0">${reward.title}</td>
                     <td class="align-middle p-0">${reward.bonusPoints}</td>
                     <td ng-click="runAddRewardModal(${reward.rewardId}, '${reward.title}', ${reward.bonusPoints})"
-                        class="align-middle p-0"><i class="far fa-check-circle check-reward fa-5x"></i></td>
+                        class="align-middle p-0"><i class="far fa-check-circle check-reward fa-3x"></i></td>
                 </tr>
             </c:forEach>
             </tbody>

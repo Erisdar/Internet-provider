@@ -1,12 +1,22 @@
 .carousel {
-    position: relative;
-    top: 40%;
+    position: fixed;
+    bottom: 50px;
     margin: auto;
-    height: 500px;
-    width: 500px;
+    width: auto;
+}
+
+.carousel-container {
+    padding-right: 200px;
 }
 
 .carousel img {
-    height: 400px;
-    width: 500px;
+    height: 500px;
+    width: 800px;
 }
+
+.bird-img {
+    position: absolute;
+    height: 300px;
+    width: auto;
+}
+

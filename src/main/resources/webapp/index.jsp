@@ -28,7 +28,7 @@
     <script src="app/login.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="loginCtrl">
-<div class="container m-auto">
+<div class="login-container">
     <div class="panel panel-login p-4" ng-cloak>
         <div class="panel-heading">
             <div class="row d-flex justify-content-around" ng-init="active=true">
@@ -108,5 +108,6 @@
         </div>
     </div>
 </div>
+<img src="img/bird.jpg" class="bird-img" alt="Bird">
 </body>
 </html>

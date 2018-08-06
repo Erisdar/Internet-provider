@@ -17,6 +17,7 @@ table {
 }
 
 .table-container {
+    position: relative;
     width: 90%;
     text-align: center;
     margin: 4% auto;

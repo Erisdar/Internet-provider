@@ -38,9 +38,9 @@
 <div class="create-tariff" ng-if="user.role == 'Admin'" data-toggle="modal" data-target="#createTariffModal" ng-cloak
      translate="CREATE_NEW_TARIFF">
 </div>
-<div class="table-container">
+<div class="table-container table-responsive">
     <p class="table-caption" translate="TARIFFS"></p>
-    <table class="tariffs-table table table-responsive" ng-cloak>
+    <table class="tariffs-table table" ng-cloak>
         <thead>
         <tr>
             <th scope="col">#</th>

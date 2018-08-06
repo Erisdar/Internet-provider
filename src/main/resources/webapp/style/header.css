@@ -12,7 +12,7 @@ body {
     max-width: 100%;
     font-size: 30px;
     font-family: 'Amatic SC', cursive;
-    height: auto;
+    height: 100%;
     background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
 }
 
@@ -44,4 +44,21 @@ nav .nav-btn:hover {
 
 .modal-open {
     overflow-y: auto
+}
+
+img {
+    height: 50px;
+    width: 50px;
+}
+
+img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.lang {
+    position: fixed;
+    bottom: 10px;
+    left: 50px;
+    text-align: center;
 }

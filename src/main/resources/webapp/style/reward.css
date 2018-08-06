@@ -1,16 +1,14 @@
 .rewards-container {
     text-align: center;
     position: relative;
-    height: 100%;
     width: 100%;
-    padding-bottom: 2%;
+    padding: 30px;
 }
 
 .table {
-    background-color: rgba(226, 192, 66, 0.84);
+    background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
     position: relative;
     text-align: center;
-    max-width: 90%;
     margin: auto;
     font-weight: bold;
 }
