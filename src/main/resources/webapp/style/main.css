@@ -1,22 +1,19 @@
-.carousel {
-    position: fixed;
-    bottom: 50px;
-    margin: auto;
-    width: auto;
+body {
+    overflow-y: hidden;
 }
 
 .carousel-container {
-    padding-right: 200px;
+    top: 0;
+    right: 0;
+    position: relative;
 }
 
 .carousel img {
-    height: 500px;
-    width: 800px;
+    height: 100%;
+    width: 100%;
 }
 
-.bird-img {
-    position: absolute;
-    height: 300px;
-    width: auto;
+.carousel img:hover {
+    cursor: unset;
+    opacity: 1;
 }
-

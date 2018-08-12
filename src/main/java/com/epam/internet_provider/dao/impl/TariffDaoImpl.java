@@ -20,12 +20,12 @@ public class TariffDaoImpl implements TariffDao {
   private static final String SELECT_TARIFFS = "SELECT * FROM internet_provider.tariff";
   private static final String INSERT_TARIFF =
       "INSERT INTO internet_provider.tariff "
-          + "(title, cost, download_speed, upload_speed, traffic) VALUES (?,?,?,?,?)";
+          + "(title, cost, download_speed, upload_speed, traffic, img_url) VALUES (?,?,?,?,?,?)";
   private static final String DELETE_TARIFF =
       "delete from internet_provider.tariff where tariff_id = ?";
   private static final String UPDATE_TARIFF =
       "update internet_provider.tariff "
-          + "set title = ?, cost = ?, download_speed = ?, upload_speed = ?, traffic = ? "
+          + "set title = ?, cost = ?, download_speed = ?, upload_speed = ?, traffic = ?, img_url = ?"
           + "where tariff_id = ?";
 
   @Override
@@ -45,7 +45,8 @@ public class TariffDaoImpl implements TariffDao {
                         result.getInt("cost"),
                         result.getInt("download_speed"),
                         result.getInt("upload_speed"),
-                        result.getInt("traffic")));
+                        result.getInt("traffic"),
+                        result.getString("img_url")));
               }
               return tariffs;
             })
@@ -68,7 +69,8 @@ public class TariffDaoImpl implements TariffDao {
                         tariff.getCost(),
                         tariff.getDownloadSpeed(),
                         tariff.getUploadSpeed(),
-                        tariff.getTraffic())
+                        tariff.getTraffic(),
+                        tariff.getImgUrl())
                     .isNotEmpty())
         .getOrElse(false);
   }
@@ -86,6 +88,7 @@ public class TariffDaoImpl implements TariffDao {
                         tariff.getDownloadSpeed(),
                         tariff.getUploadSpeed(),
                         tariff.getTraffic(),
+                        tariff.getImgUrl(),
                         tariff.getId())
                     .isNotEmpty())
         .getOrElse(false);

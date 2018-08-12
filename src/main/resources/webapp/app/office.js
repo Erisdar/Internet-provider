@@ -39,4 +39,13 @@ app.controller("officeCtrl", function ($scope, $http, $localStorage) {
                 getUser();
             })
     };
+
+    $scope.getTotal = function () {
+        var total = 0;
+        for (var i = 0; i < $scope.user.rewards.length; i++) {
+            var reward = $scope.user.rewards[i];
+            total += reward.bonusPoints;
+        }
+        return total;
+    };
 });

@@ -16,6 +16,7 @@ public final class TariffUtil {
     tariff.setUploadSpeed(tariffJson.getInt("uploadSpeed"));
     tariff.setCost(tariffJson.getInt("cost"));
     tariff.setTraffic(tariffJson.getInt("traffic"));
+    tariff.setImgUrl(tariffJson.getString("imgUrl"));
     return tariff;
   }
 }

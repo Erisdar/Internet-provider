@@ -73,7 +73,8 @@
             </td>
             <td ng-if="user.role == 'Admin'">
                 <button class="btn admin-button btn-lg" data-toggle="modal" ng-click="runChangeModal(tariff.id, tariff.title,
-                        tariff.downloadSpeed, tariff.uploadSpeed, tariff.traffic, tariff.cost)" translate="CHANGE">
+                        tariff.downloadSpeed, tariff.uploadSpeed, tariff.traffic, tariff.cost, tariff.imgUrl)"
+                        translate="CHANGE">
                 </button>
             </td>
             <td ng-if="user.role == 'Admin'">
@@ -111,7 +112,7 @@
      aria-labelledby="createTariffModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form ng-submit="createTariff(title, downloadSpeed, uploadSpeed, traffic, cost)">
+        <form ng-submit="createTariff(title, downloadSpeed, uploadSpeed, traffic, cost, imgUrl)">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createTariffModalLabel">Создать тариф</h5>
@@ -152,6 +153,13 @@
                                    placeholder="Стоимость">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="img-url" class="col-auto col-form-label">Изображение</label>
+                        <div class="col-auto">
+                            <input type="text" ng-model="imgUrl" class="form-control" id="img-url"
+                                   placeholder="url">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -166,7 +174,7 @@
      aria-labelledby="changeTariffModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form ng-submit="changeTariff($ctrl.changingTitle, $ctrl.changingDownloadSpeed, $ctrl.changingUploadSpeed,
-        $ctrl.changingTraffic, $ctrl.changingCost)">
+        $ctrl.changingTraffic, $ctrl.changingCost, $ctrl.changingImgUrl)">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="changeTariffModalLabel">Изменить тариф
@@ -206,6 +214,13 @@
                         <div class="col-auto">
                             <input type="number" id="changingCost" ng-model="$ctrl.changingCost" class="form-control"
                                    placeholder="Стоимость" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-auto col-form-label">Изображение</label>
+                        <div class="col-auto">
+                            <input type="text" id="changingImgUrl" ng-model="$ctrl.changingImgUrl" class="form-control"
+                                   placeholder="url" required>
                         </div>
                     </div>
                 </div>

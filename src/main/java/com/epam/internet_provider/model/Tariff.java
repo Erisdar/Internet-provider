@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tariff {
-
-    private int id;
-    private String title;
-    private int cost;
-    private int downloadSpeed;
-    private int uploadSpeed;
-    private int traffic;
-
+  private int id;
+  private String title;
+  private int cost;
+  private int downloadSpeed;
+  private int uploadSpeed;
+  private int traffic;
+  private String imgUrl;
 }

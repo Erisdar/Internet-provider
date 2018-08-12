@@ -33,9 +33,9 @@
         <div class="panel-heading">
             <div class="row d-flex justify-content-around" ng-init="active=true">
                 <a href="#" ng-class="{'active': active === true}" ng-click="checked=false; active=!active"
-                   class="login-form-link">{{'LOGIN'| translate}}</a>
+                   class="login-form-link form-link">{{'LOGIN'| translate}}</a>
                 <a href="#" ng-class="{'active': active === false}" ng-click="checked=true; active=!active"
-                   class="register-form-link">{{'REGISTRATION'| translate}}</a>
+                   class="register-form-link form-link">{{'REGISTRATION'| translate}}</a>
             </div>
             <hr>
         </div>
@@ -108,6 +108,6 @@
         </div>
     </div>
 </div>
-<img src="img/bird.jpg" class="bird-img" alt="Bird">
+<img src="img/bird.png" class="bird-img" alt="Bird">
 </body>
 </html>

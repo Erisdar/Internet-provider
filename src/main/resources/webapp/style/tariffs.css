@@ -1,6 +1,6 @@
 @charset "utf-8";
 .modal-open {
-    overflow-y: scroll ;
+    overflow-y: scroll;
 }
 
 .tariffs-table {
@@ -24,7 +24,7 @@ table {
 }
 
 tbody {
-    background-color: rgba(226, 192, 66, 0.84);
+    background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
 }
 
 .table-caption {
@@ -48,6 +48,7 @@ tbody {
 
 .create-tariff {
     font-size: 30px;
+    z-index: 5;
     position: absolute;
     left: 85%;
     top: 15%;
@@ -60,7 +61,7 @@ tbody {
     color: #17a2b8;
 }
 
-.admin-button:hover{
+.admin-button:hover {
     background-color: #cacece;
 }
 

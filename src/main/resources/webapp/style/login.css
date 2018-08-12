@@ -1,5 +1,7 @@
 body {
     padding-top: 90px;
+    background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
+
 }
 
 .panel-login {
@@ -133,11 +135,16 @@ body {
     margin-top: 120px;
     margin-left: calc(25% + 120px);
     width: 30%;
+    background-color: white;
 }
 
 .bird-img {
     top: 0;
     left: 25%;
-    z-index: -1;
+    z-index: 1;
     position: absolute;
+}
+
+.form-link{
+    z-index: 2;
 }

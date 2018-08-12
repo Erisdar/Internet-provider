@@ -1,3 +1,7 @@
+body {
+    overflow-y: scroll;
+}
+
 .rewards-container {
     text-align: center;
     position: relative;

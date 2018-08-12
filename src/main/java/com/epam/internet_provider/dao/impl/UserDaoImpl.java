@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
           + "VALUES(?,?,?,?,?,?,?)";
   private static final String SELECT_USER =
       "SELECT email, login, bonus_amount, role, status, cash, "
-          + "user.tariff_id, title, cost, download_speed, upload_speed, tariff.traffic "
+          + "user.tariff_id, title, cost, download_speed, upload_speed, tariff.traffic, img_url "
           + "FROM internet_provider.user "
           + "LEFT join internet_provider.tariff on user.tariff_id = tariff.tariff_id "
           + "where login = ?";
@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
           + "FROM internet_provider.user left join tariff on user.tariff_id = tariff.tariff_id "
           + "where role != 1";
   private static final String UPDATE_STATUS =
-      "UPDATE internet_provider.user set status = ? where login = ?";
+      "UPDATE internet_provider.user set status = ? where login = ? ";
 
   private DbConnectionPool connectionPool = DbConnectionPool.getInstance();
 
@@ -127,6 +127,7 @@ public class UserDaoImpl implements UserDao {
                           tariff.setTraffic(
                               Optional.ofNullable(record.getValue("traffic", Integer.class))
                                   .orElse(0));
+                          tariff.setImgUrl(record.getValue("img_url", String.class));
                           user.setEmail(record.getValue("email", String.class));
                           user.setLogin(record.getValue("login", String.class));
                           user.setBonusAmount(record.getValue("bonus_amount", Integer.class));

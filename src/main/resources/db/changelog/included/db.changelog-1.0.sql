@@ -8,6 +8,7 @@ CREATE TABLE `internet_provider`.`tariff` (
   `download_speed` SMALLINT(4) UNSIGNED             NOT NULL,
   `upload_speed`   SMALLINT(4) UNSIGNED             NOT NULL,
   `traffic`        SMALLINT(4) UNSIGNED             NOT NULL,
+  `img_url`        VARCHAR(20) CHARACTER SET 'utf8',
   PRIMARY KEY (`tariff_id`),
   UNIQUE INDEX `title_UNIQUE` (`title` ASC)
 )

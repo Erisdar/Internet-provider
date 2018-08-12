@@ -40,7 +40,7 @@ app.controller("tariffCtrl", function ($scope, $http) {
             });
     };
 
-    $scope.runChangeModal = function (id, title, downloadSpeed, uploadSpeed, traffic, cost) {
+    $scope.runChangeModal = function (id, title, downloadSpeed, uploadSpeed, traffic, cost, imgUrl) {
         self.changingTariffId = id;
         self.changingTariffTitle = title;
         self.changingTitle = title;
@@ -48,16 +48,18 @@ app.controller("tariffCtrl", function ($scope, $http) {
         self.changingUploadSpeed = uploadSpeed;
         self.changingTraffic = traffic;
         self.changingCost = cost;
+        self.changingImgUrl = imgUrl;
         $('#changeTariffModal').modal('show');
     };
 
-    $scope.createTariff = function (title, downloadSpeed, uploadSpeed, traffic, cost) {
+    $scope.createTariff = function (title, downloadSpeed, uploadSpeed, traffic, cost, imgUrl) {
         let tariff = {
             title: title,
             downloadSpeed: downloadSpeed,
             uploadSpeed: uploadSpeed,
             traffic: traffic,
-            cost: cost
+            cost: cost,
+            imgUrl: imgUrl
         };
         $http.post('/tariff', tariff, {headers: {'Content-Type': 'application/json'}})
             .then(function () {
@@ -68,14 +70,15 @@ app.controller("tariffCtrl", function ($scope, $http) {
             })
     };
 
-    $scope.changeTariff = function (title, downloadSpeed, uploadSpeed, traffic, cost) {
+    $scope.changeTariff = function (title, downloadSpeed, uploadSpeed, traffic, cost, imgUrl) {
         let tariff = {
             id: self.changingTariffId,
             title: title,
             downloadSpeed: downloadSpeed,
             uploadSpeed: uploadSpeed,
             traffic: traffic,
-            cost: cost
+            cost: cost,
+            imgUrl: imgUrl
         };
         $http.put("/tariff", tariff, {headers: {'Content-Type': 'application/json'}})
             .then(function () {

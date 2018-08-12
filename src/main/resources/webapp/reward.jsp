@@ -35,11 +35,11 @@
     <link rel="stylesheet" href="style/header.css">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Cormorant+Infant" rel="stylesheet">
 </head>
-<body ng-app="myApp" ng-controller="rewardCtrl as $ctrl">
+<body ng-app="myApp" ng-controller="rewardCtrl as $ctrl" ng-cloak>
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="reward"/>
 </jsp:include>
-<div class="rewards-container">
+<div class="rewards-container" ng-cloak>
     <h1 translate="SHOP"></h1>
     <div class="table-responsive">
         <table class="table table-bordered">

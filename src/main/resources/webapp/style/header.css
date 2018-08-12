@@ -8,22 +8,22 @@ body {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
-    margin-left: 200px;
     max-width: 100%;
     font-size: 30px;
     font-family: 'Amatic SC', cursive;
     height: 100%;
+    margin-left: 200px;
     background: linear-gradient(to right, rgba(155, 222, 203, 0.72), rgba(216, 194, 52, 0.58), rgba(216, 194, 52, 0.58));
 }
 
 nav {
+    position: fixed;
+    line-height: 60px;
     width: 200px;
     top: 0;
     left: 0;
-    font-size: 32px;
-    position: fixed;
+    font-size: 40px;
     height: 100%;
-    overflow-y: hidden;
 }
 
 nav a {
@@ -31,9 +31,10 @@ nav a {
 }
 
 nav .active {
+    word-spacing: 100px;
     text-decoration: none;
-    font-size: 50px;
-    line-height: 45px;
+    font-size: 56px;
+    line-height: 65px;
     color: #17a2b8;
 }
 
@@ -57,8 +58,18 @@ img:hover {
 }
 
 .lang {
-    position: fixed;
-    bottom: 10px;
-    left: 50px;
     text-align: center;
+}
+
+.header-bird {
+    height: 150px;
+    width: auto;
+}
+
+.content-container {
+    /*left: 0;*/
+    /*position: absolute;*/
+    /*margin-left: 200px;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
 }
