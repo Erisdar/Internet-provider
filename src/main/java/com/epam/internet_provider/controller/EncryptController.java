@@ -13,12 +13,9 @@ import javax.servlet.http.HttpServletResponse;
     urlPatterns = {"/encrypt"})
 public class EncryptController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/plain");
-        Try.run(() ->
-                response.getWriter()
-                        .println(DecryptionUtil.getPublicKey())
-        );
-    }
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    response.setContentType("text/plain");
+    Try.run(() -> response.getWriter().print(DecryptionUtil.getPublicKey()));
+  }
 }

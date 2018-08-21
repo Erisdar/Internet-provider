@@ -62,5 +62,14 @@
   "FORGOT_PASSWORD": "Forgot password?",
   "EMAIL_ADDRESS": "Email address",
   "CONFIRM_PASSWORD": "Confirm password",
-  "REGISTER_NOW": "Register Now"
+  "REGISTER_NOW": "Register Now",
+  "PASSWORDS_MUST_MATCH": "Passwords must match",
+  "LOGIN_EXISTS": "User with this name already exists",
+  "EMAIL_EXISTS": "User with this email already exists",
+  "MIN_LENGTH": "The entered value must contain more than {{length}} characters",
+  "MAX_LENGTH": "The entered value must contain less than {{length}} characters",
+  "LOGIN_PATTERN": "The login can contain characters, numbers, and underscore",
+  "REQUIRED_FIELD": "Field is required",
+  "PASSWORD_PATTERN": "The password must contain uppercase letter and number",
+  "EMAIL_PATTERN": "Invalid email entered"
 }

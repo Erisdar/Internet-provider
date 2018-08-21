@@ -6,12 +6,13 @@
     <style>html {
         display: none;
     }</style>
-    <meta http-equiv="refresh" content="0; noscript.jsp"/>
+    <meta http-equiv="refresh" content="0; noscript.html"/>
 </noscript>
-<nav ng-app="myApp" ng-controller="loginCtrl" class="nav d-flex align-content-between flex-wrap text-center h-100 d-block"
+<nav ng-app="myApp" ng-controller="loginCtrl"
+     class="nav d-flex align-content-between flex-wrap text-center h-auto d-block"
      role="navigation" ng-cloak>
     <div class="w-100">
-        <img src="img/bird.png" class="header-bird" alt="Bird">
+        <img src="img/bird.png" class="header-bird header-img non-hover-img" alt="Bird">
         <a class="nav-item nav-btn <c:if test='${param.pageTitle == "main"}'>active</c:if>" id="main"
            href="main.jsp" target="_self" translate="MAIN_PAGE"></a>
         <a class="nav-item nav-btn <c:if test='${param.pageTitle == "tariffs"}'>active</c:if>" id="tariffs"
@@ -25,8 +26,9 @@
         <a class="nav-item nav-btn" href="#" ng-click="logout()" translate="EXIT_BUTTON"></a>
     </div>
     <div class="lang w-100">
-        <img ng-src="img/Flag_of_United_Kingdom.png" alt="Kingdom of United Flag" ng-click="changeLanguage('en')">
-        <img ng-src="img/Flag_of_Russia.png" alt="Russian Flag" ng-click="changeLanguage('ru')">
+        <img class="lang-img" ng-src="img/Flag_of_United_Kingdom.png" alt="Kingdom of United Flag"
+             ng-click="changeLanguage('en')">
+        <img class="lang-img" ng-src="img/Flag_of_Russia.png" alt="Russian Flag" ng-click="changeLanguage('ru')">
     </div>
 </nav>
 </body>

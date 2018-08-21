@@ -2,8 +2,6 @@ var app = angular.module("myApp");
 
 app.controller("officeCtrl", function ($scope, $http, $localStorage) {
 
-    var self = this;
-    $scope.user = null;
     $scope.login = $localStorage.user;
 
     angular.element(document).ready(function () {
@@ -41,10 +39,12 @@ app.controller("officeCtrl", function ($scope, $http, $localStorage) {
     };
 
     $scope.getTotal = function () {
-        var total = 0;
-        for (var i = 0; i < $scope.user.rewards.length; i++) {
-            var reward = $scope.user.rewards[i];
-            total += reward.bonusPoints;
+        let total = 0;
+        if (!angular.isUndefined($scope.user)) {
+            for (let i = 0; i < $scope.user.rewards.length; i++) {
+                let reward = $scope.user.rewards[i];
+                total += reward.bonusPoints;
+            }
         }
         return total;
     };

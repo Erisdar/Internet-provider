@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-messages.min.js"></script>
     <script src="app/app.js"></script>
     <script src="app/login.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Gloria+Hallelujah|Great+Vibes|Hanalei+Fill|Kirang+Haerang|Modern+Antiqua|Pacifico|Ranga|Sacramento|Shadows+Into+Light"
@@ -34,17 +35,19 @@
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="main"/>
 </jsp:include>
-<%--<div class="carousel-container">--%>
-    <%--<div id="carouselControls" class="carousel slide" data-pause="false" data-ride="carousel">--%>
-        <%--<div class="carousel-inner">--%>
-            <%--<div class="carousel-item active">--%>
-                <%--<img class="d-block" src="img/boy.jpg" alt="First slide">--%>
-            <%--</div>--%>
-            <%--<div class="carousel-item">--%>
-                <%--<img class="d-block" src="img/letaet-vo-sne.jpg" alt="Second slide">--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
+<div class="content-container">
+    <div class="carousel-container">
+        <div id="carouselControls" class="carousel slide" data-pause="false" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block" src="img/boy.jpg" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block" src="img/letaet-vo-sne.jpg" alt="Second slide">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

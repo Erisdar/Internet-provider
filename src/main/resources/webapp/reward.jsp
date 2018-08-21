@@ -21,6 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-messages.min.js"></script>
     <script src="app/app.js"></script>
     <script src="app/login.js"></script>
     <script src="app/reward.js"></script>
@@ -39,32 +40,34 @@
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="reward"/>
 </jsp:include>
-<div class="rewards-container" ng-cloak>
-    <h1 translate="SHOP"></h1>
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th class="align-middle" scope="col" translate="PICTURE"></th>
-                <th class="align-middle" scope="col" translate="TITLE"></th>
-                <th class="align-middle" scope="col" translate="NUMBER_OF_POINTS"></th>
-                <th class="align-middle" scope="col" translate="ADD"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <jsp:useBean id="rewardDao" class="com.epam.internet_provider.dao.impl.RewardDaoImpl"/>
-            <c:forEach items="${rewardDao.rewards}" var="reward" varStatus="rewardLoop">
+<div class="content-container">
+    <div class="rewards-container" ng-cloak>
+        <p class="font-weight-bold h1" translate="SHOP"></p>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <th scope="row" class="p-0 align-middle"><img src="${reward.imgHref}" class="reward-img"
-                                                                  alt="${reward.title}"></th>
-                    <td class="align-middle p-0">${reward.title}</td>
-                    <td class="align-middle p-0">${reward.bonusPoints}</td>
-                    <td ng-click="runAddRewardModal(${reward.rewardId}, '${reward.title}', ${reward.bonusPoints})"
-                        class="align-middle p-0"><i class="far fa-check-circle check-reward fa-3x"></i></td>
+                    <th class="align-middle" scope="col" translate="PICTURE"></th>
+                    <th class="align-middle" scope="col" translate="TITLE"></th>
+                    <th class="align-middle" scope="col" translate="NUMBER_OF_POINTS"></th>
+                    <th class="align-middle" scope="col" translate="ADD"></th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <jsp:useBean id="rewardDao" class="com.epam.internet_provider.dao.impl.RewardDaoImpl"/>
+                <c:forEach items="${rewardDao.rewards}" var="reward" varStatus="rewardLoop">
+                    <tr>
+                        <th scope="row" class="p-0 align-middle"><img src="${reward.imgHref}" class="reward-img"
+                                                                      alt="${reward.title}"></th>
+                        <td class="align-middle p-0">${reward.title}</td>
+                        <td class="align-middle p-0">${reward.bonusPoints}</td>
+                        <td ng-click="runAddRewardModal(${reward.rewardId}, '${reward.title}', ${reward.bonusPoints})"
+                            class="align-middle p-0"><i class="far fa-check-circle check-reward fa-3x"></i></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div class="modal fade reward-confirm" id="add-reward-modal" role="dialog">

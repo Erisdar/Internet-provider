@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-messages.min.js"></script>
     <script src="app/app.js"></script>
     <script src="app/login.js"></script>
     <script src="app/tariff.js"></script>
@@ -35,55 +36,59 @@
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="tariffs"/>
 </jsp:include>
-<div class="create-tariff" ng-if="user.role == 'Admin'" data-toggle="modal" data-target="#createTariffModal" ng-cloak
-     translate="CREATE_NEW_TARIFF">
-</div>
-<div class="table-container table-responsive">
-    <p class="table-caption" translate="TARIFFS"></p>
-    <table class="tariffs-table table" ng-cloak>
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col" translate="TITLE"></th>
-            <th scope="col">{{'DOWNLOAD_UPLOAD_SPEED' | translate}}, {{'Mpbs' | translate}}</th>
-            <th scope="col">{{'TRAFFIC_AMOUNT' | translate}}, {{'GB' | translate}}</th>
-            <th scope="col">{{'COST' | translate}}, {{'RUB' | translate}}</th>
-            <th scope="col" translate="STATUS"></th>
-            <th ng-if="user.role == 'Admin'" colspan="2" translate="ACTION"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="tariff in tariffs">
-            <td> {{$index + 1}}</td>
-            <td width="150px"> {{tariff.title}}</td>
-            <td> {{tariff.downloadSpeed}}/{{tariff.uploadSpeed}}</td>
-            <td>
-                <div ng-if="tariff.traffic == 0" translate="UNLIMITED"></div>
-                <div ng-if="tariff.traffic != 0"> {{tariff.traffic}}</div>
-            </td>
-            <td> {{tariff.cost}}</td>
-            <td>
-                <button ng-click="runActivateModal(tariff.id, tariff.title, tariff.cost)"
-                        ng-disabled="user.tariff.id == tariff.id || user.status == 'Blocked'"
-                        ng-class="{'current-tariff btn-info' : user.tariff.id == tariff.id,
+<div class="content-container">
+    <div class="create-tariff" ng-if="user.role == 'Admin'" data-toggle="modal" data-target="#createTariffModal"
+         ng-cloak
+         translate="CREATE_NEW_TARIFF">
+    </div>
+    <div class="table-container table-responsive">
+        <p class="table-caption" translate="TARIFFS"></p>
+        <table class="tariffs-table table" ng-cloak>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" translate="TITLE"></th>
+                <th scope="col">{{'DOWNLOAD_UPLOAD_SPEED' | translate}}, {{'Mpbs' | translate}}</th>
+                <th scope="col">{{'TRAFFIC_AMOUNT' | translate}}, {{'GB' | translate}}</th>
+                <th scope="col">{{'COST' | translate}}, {{'RUB' | translate}}</th>
+                <th scope="col" translate="STATUS"></th>
+                <th ng-if="user.role == 'Admin'" colspan="2" translate="ACTION"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="tariff in tariffs">
+                <td> {{$index + 1}}</td>
+                <td width="150px"> {{tariff.title}}</td>
+                <td> {{tariff.downloadSpeed}}/{{tariff.uploadSpeed}}</td>
+                <td>
+                    <div ng-if="tariff.traffic == 0" translate="UNLIMITED"></div>
+                    <div ng-if="tariff.traffic != 0"> {{tariff.traffic}}</div>
+                </td>
+                <td> {{tariff.cost}}</td>
+                <td>
+                    <button ng-click="runActivateModal(tariff.id, tariff.title, tariff.cost)"
+                            ng-disabled="user.tariff.id == tariff.id || user.status == 'Blocked'"
+                            ng-class="{'current-tariff btn-info' : user.tariff.id == tariff.id,
                         'not-current-tariff btn-dark' : user.tariff.id != tariff.id}" type="button" class="btn btn-lg">
-                    <div ng-if="user.tariff.id != tariff.id" translate="CONNECT"></div>
-                    <div ng-if="user.tariff.id == tariff.id" translate="CONNECTED"></div>
-                </button>
-            </td>
-            <td ng-if="user.role == 'Admin'">
-                <button class="btn admin-button btn-lg" data-toggle="modal" ng-click="runChangeModal(tariff.id, tariff.title,
+                        <div ng-if="user.tariff.id != tariff.id" translate="CONNECT"></div>
+                        <div ng-if="user.tariff.id == tariff.id" translate="CONNECTED"></div>
+                    </button>
+                </td>
+                <td ng-if="user.role == 'Admin'">
+                    <button class="btn admin-button btn-lg" data-toggle="modal" ng-click="runChangeModal(tariff.id, tariff.title,
                         tariff.downloadSpeed, tariff.uploadSpeed, tariff.traffic, tariff.cost, tariff.imgUrl)"
-                        translate="CHANGE">
-                </button>
-            </td>
-            <td ng-if="user.role == 'Admin'">
-                <button class="btn btn-lg admin-button" ng-click="deleteTariff(tariff.id)" translate="REMOVE"></button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <h3 ng-if="user.status == 'Blocked'" ng-cloak translate="BLOCKED_MESSAGE"></h3>
+                            translate="CHANGE">
+                    </button>
+                </td>
+                <td ng-if="user.role == 'Admin'">
+                    <button class="btn btn-lg admin-button" ng-click="deleteTariff(tariff.id)"
+                            translate="REMOVE"></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h3 ng-if="user.status == 'Blocked'" ng-cloak translate="BLOCKED_MESSAGE"></h3>
+    </div>
 </div>
 <!-- Modal Connect -->
 <div class="modal fade modal-connect" id="connect" role="dialog">

@@ -1,5 +1,5 @@
 datasource:
-    url: jdbc:mysql://localhost:3306/internet_provider?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/internet_provider?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true
     username: root
     password: 1234
 liquibase:

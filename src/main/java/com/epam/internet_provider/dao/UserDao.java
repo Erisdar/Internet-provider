@@ -15,6 +15,8 @@ public interface UserDao {
 
   Credentials getCredentials(String login);
 
+  String getData(String value, String field);
+
   boolean updateCash(String login, int cash);
 
   boolean updateTariff(String login, int tariff_id);

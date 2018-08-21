@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-local/angular-translate-storage-local.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.18.1/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular-messages.min.js"></script>
     <script src="app/app.js"></script>
     <script src="app/login.js"></script>
     <script src="app/user.js"></script>
@@ -35,38 +36,40 @@
 <jsp:include page="header.jspf">
     <jsp:param name="pageTitle" value="users"/>
 </jsp:include>
-<h1>Список пользователей</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Логин</th>
-        <th scope="col">Тариф</th>
-        <th scope="col">Баланс</th>
-        <th scope="col">Статус</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="user in users">
-        <th scope="row">{{$index + 1}}</th>
-        <td>{{user.login}}</td>
-        <td>{{user.tariff.title}}</td>
-        <td>{{user.cash}}</td>
-        <td>
-            <div class="dropdown">
-                <button class="btn btn-lg btn-dropdown dropdown-toggle" type="button" id="dropdownMenu"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{user.status}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                    <button class="dropdown-item btn-lg" ng-click="changeStatus(user.login, status)"
-                            ng-if="status != user.status"
-                            ng-repeat="status in statuses" type="button">{{status}}
+<div class="content-container">
+    <h1>Список пользователей</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Логин</th>
+            <th scope="col">Тариф</th>
+            <th scope="col">Баланс</th>
+            <th scope="col">Статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users">
+            <th scope="row">{{$index + 1}}</th>
+            <td>{{user.login}}</td>
+            <td>{{user.tariff.title}}</td>
+            <td>{{user.cash}}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-lg btn-dropdown dropdown-toggle" type="button" id="dropdownMenu"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{user.status}}
                     </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <button class="dropdown-item btn-lg" ng-click="changeStatus(user.login, status)"
+                                ng-if="status != user.status"
+                                ng-repeat="status in statuses" type="button">{{status}}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

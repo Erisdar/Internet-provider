@@ -50,6 +50,7 @@ public class UserDaoImpl implements UserDao {
           + "where role != 1";
   private static final String UPDATE_STATUS =
       "UPDATE internet_provider.user set status = ? where login = ? ";
+  private static String GET_USER_DATA = "SELECT %s from user where %s = ?";
 
   private DbConnectionPool connectionPool = DbConnectionPool.getInstance();
 
@@ -171,6 +172,17 @@ public class UserDaoImpl implements UserDao {
               return credentials;
             })
         .getOrNull();
+  }
+
+  @Override
+  public String getData(String value, String field) {
+    return Try.withResources(() -> connectionPool.getConnection())
+        .of(
+            connection ->
+                DSL.using(connection)
+                    .fetchOne(String.format(GET_USER_DATA, field, field), value)
+                    .map(record -> record.getValue(field, String.class)))
+        .get();
   }
 
   @Override

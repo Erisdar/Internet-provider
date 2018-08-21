@@ -1,6 +1,6 @@
 (function (angular) {
 
-    let app = angular.module("myApp", ['ngResource', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate']);
+    let app = angular.module("myApp", ['ngResource', 'ngAnimate', 'ngStorage', 'ngCookies', 'pascalprecht.translate', 'ngMessages']);
 
     app.config(function ($locationProvider, $translateProvider) {
         $locationProvider.html5Mode({
