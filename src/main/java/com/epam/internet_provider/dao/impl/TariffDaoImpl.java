@@ -30,26 +30,8 @@ public class TariffDaoImpl implements TariffDao {
 
   @Override
   public List<Tariff> getTariffs() {
-    Connection connection = connectionPool.getConnection();
-
-    return Try.withResources(() -> connection, () -> connection.prepareStatement(SELECT_TARIFFS))
-        .of(
-            (connection1, preparedStatement) -> {
-              ResultSet result = preparedStatement.executeQuery();
-              List<Tariff> tariffs = new ArrayList<>();
-              while (result.next()) {
-                tariffs.add(
-                    new Tariff(
-                        result.getInt("tariff_id"),
-                        result.getString("title"),
-                        result.getInt("cost"),
-                        result.getInt("download_speed"),
-                        result.getInt("upload_speed"),
-                        result.getInt("traffic"),
-                        result.getString("img_url")));
-              }
-              return tariffs;
-            })
+    return Try.withResources(() -> connectionPool.getConnection())
+        .of((connection) -> DSL.using(connection).fetch(SELECT_TARIFFS).into(Tariff.class))
         .getOrElseGet(
             e -> {
               LOG.error("Runtime exception was throw in process of getTariffs: ", e);

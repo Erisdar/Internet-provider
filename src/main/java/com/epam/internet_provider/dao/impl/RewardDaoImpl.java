@@ -22,17 +22,7 @@ public class RewardDaoImpl implements RewardDao {
   @Override
   public List<Reward> getRewards() {
     return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            connection ->
-                DSL.using(connection)
-                    .fetch(SELECT_REWARDS)
-                    .map(
-                        reward ->
-                            new Reward(
-                                reward.getValue("reward_id", Integer.class),
-                                reward.getValue("title", String.class),
-                                reward.getValue("bonus_points", Integer.class),
-                                reward.getValue("img_href", String.class))))
+        .of(connection -> DSL.using(connection).fetch(SELECT_REWARDS).into(Reward.class))
         .getOrNull();
   }
 

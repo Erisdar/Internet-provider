@@ -50,6 +50,7 @@ dependencies {
     compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
     compile group: 'jstl', name: 'jstl', version: '1.2'
     compile group: 'org.jooq', name: 'jooq', version: '3.11.3'
+    compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
 }
 
 def dbConfig = new Yaml().load(new File("src/main/resources/db.yaml").newInputStream())
