@@ -21,7 +21,7 @@ Follow these steps:
 
 1. Instal [Java SE Development Kit 8 u181+](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 2. Instal [MySQL Community Server](https://dev.mysql.com/downloads/file/?id=479669)
-3. Run cloning project with the following command:
+3. Run the project with the following command:
 ```
 ./gradlew update appRun
 ```
