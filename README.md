@@ -19,8 +19,8 @@ Windows 10 64-bit
 
 Follow these steps:
 
-1. Instal [Java SE Development Kit 8 u181+] (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-2. Instal [MySQL Community Server] (https://dev.mysql.com/downloads/file/?id=479669)
+1. Instal [Java SE Development Kit 8 u181+](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+2. Instal [MySQL Community Server](https://dev.mysql.com/downloads/file/?id=479669)
 3. Run project:
 ```
 ./gradlew update appRun
