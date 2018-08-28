@@ -11,13 +11,9 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationTest {
 
-  private UserDao userDao = new UserDaoImpl();
-  private User existUser;
-
   @Before
   public void setupBrowser() {
     Configuration.browser = "chrome";
-    existUser = userDao.getUsers().stream().findFirst().get();
   }
 
   @Test
@@ -25,9 +21,9 @@ public class RegistrationTest {
     open("http://localhost:8080/");
     $("#register-form").click();
     $("#register-submit").shouldHave(Condition.disabled);
-    $("#registration-login#registration-login").setValue(existUser.getLogin());
+    $("#registration-login#registration-login").setValue("Trogg");
     $("#login-error").waitUntil(Condition.visible, 3000);
-    $("#registration-email").setValue(existUser.getEmail());
+    $("#registration-email").setValue("murfrik666@gmail.com");
     $("#email-error").waitUntil(Condition.visible, 3000);
     $("#registration-login#registration-login").setValue("NewUser");
     $("#login-success").waitUntil(Condition.visible, 3000);

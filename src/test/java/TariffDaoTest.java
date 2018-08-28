@@ -19,7 +19,6 @@ public class TariffDaoTest extends Assert {
     tariff.setUploadSpeed(10);
     tariff.setDownloadSpeed(10);
     tariff.setImgUrl("/testImage.jpg");
-
     tariffDao.createTariff(tariff);
   }
 

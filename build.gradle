@@ -34,6 +34,7 @@ dependencies {
     testCompile group: 'com.carrotsearch', name: 'junit-benchmarks', version: '0.3.0'
     testCompile 'com.codeborne:selenide:4.13.0'
     compileOnly 'org.projectlombok:lombok:1.18.0'
+    compile group: 'org.springframework', name: 'spring-context', version: '5.0.5.RELEASE'
     compile group: 'io.vavr', name: 'vavr', version: '0.9.2'
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.11.v20180605'
     compile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '9.4.11.v20180605'
@@ -54,17 +55,21 @@ dependencies {
     compile group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
 }
 
-def dbConfig = new Yaml().load(new File("src/main/resources/db.yaml").newInputStream())
+def dbConfig = new Yaml().load(new File("src/main/resources/application.yml").newInputStream())
 
 liquibase {
     activities {
         main {
             changeLogFile dbConfig.liquibase.changeLogPath
-            url dbConfig.datasource.url
+            url dbConfig.datasource.jdbcUrl
             username dbConfig.datasource.username
             password dbConfig.datasource.password
         }
     }
+}
+
+test {
+    exclude '**/RegistrationTest.class'
 }
 
 gretty {

@@ -1,5 +1,7 @@
 # Internet-provider
 
+[![Build Status](https://travis-ci.org/Erisdar/Internet-provider.svg?branch=master)](https://travis-ci.org/Erisdar/Internet-provider)
+
 The Internet provider system allows users to register and log in the system, connect tariffs and make payments. The system supports two 
 languages: Russian and English. The project is written using such technologies as: Java 8, AngularJs, Liquibase, JWT, and others.
 
