@@ -41,8 +41,7 @@ public class UserDaoImpl implements UserDao {
           + "inner join user on user.user_id = user_2reward.user_id) "
           + "where login = ?";
   private static final String SELECT_USERS =
-      "SELECT login, tariff.title, cash, status "
-          + "FROM internet_provider.user left join tariff on user.tariff_id = tariff.tariff_id "
+      "SELECT * FROM internet_provider.user left join tariff on user.tariff_id = tariff.tariff_id "
           + "where role != 1";
   private static final String UPDATE_STATUS =
       "UPDATE internet_provider.user set status = ? where login = ? ";

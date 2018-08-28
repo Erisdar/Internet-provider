@@ -44,7 +44,7 @@
                 <a href="#" ng-class="{'active': active === true}" ng-click="checked=false; active=!active"
                    class="login-form-link form-link">{{'LOGIN'| translate}}</a>
                 <a href="#" ng-class="{'active': active === false}" ng-click="checked=true; active=!active"
-                   class="register-form-link form-link">{{'REGISTRATION'| translate}}</a>
+                   class="register-form-link form-link" id="register-form">{{'REGISTRATION'| translate}}</a>
             </div>
             <hr>
         </div>
@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-12 mw-25">
                     <form name="signin" ng-submit="login(authLogin, authPassword)" ng-hide="checked"
-                          class="animate-show-hide" role="form">
+                          class="animate-show-hide" role="form" id="auth-login">
                         <div class="form-group">
                             <input type="text" name="login" ng-model="authLogin" tabindex="1" class="form-control"
                                    placeholder="{{'USERNAME'| translate}}" required>
@@ -90,17 +90,18 @@
                             <input type="text" name="registrationLogin" ng-model="registrationLogin" tabindex="1"
                                    ng-class="{'is-invalid':register.registrationLogin.$invalid,
                                    'is-valid':register.registrationLogin.$valid}" class="form-control"
-                                   ng-model-options="{ debounce : 1000}" required validate-login
+                                   ng-model-options="{ debounce : 1000}" required validate-login id="registration-login"
                                    placeholder="{{'USERNAME'| translate}}" ng-minlength="3" ng-maxlength="30"
                                    ng-pattern="/^([A-Za-zа-яА-Я0-9_])*$/" ng-trim="false"
                                    ng-keydown="runSpin($event, 'loginCheck', 'loginSpin')"
                                    ng-keypress="loginCheck = false; loginSpin = true">
                             <div class="loader animate-show-hide" ng-show="loginSpin == true"></div>
                             <div class="fas fa-check fa-2x validation-success animate-show-hide"
-                                 ng-show="loginSpin == false && register.registrationLogin.$valid"></div>
+                                 ng-show="loginSpin == false && register.registrationLogin.$valid"
+                                 id="login-success"></div>
                             <div class="fas fa-times fa-2x validation-failure animate-show-hide"
                                  ng-show="loginSpin == false && register.registrationLogin.$invalid
-                                 && !register.registrationLogin.$pristine"></div>
+                                 && !register.registrationLogin.$pristine" id="login-error"></div>
                         </div>
                         <div ng-messages="register.registrationLogin.$error" class="help-block">
                             <div ng-message="minlength" translate="MIN_LENGTH" translate-value-length="3"></div>
@@ -111,17 +112,18 @@
                         <div class="form-group position-relative">
                             <input type="email" name="registrationEmail" ng-model="registrationEmail" tabindex="2"
                                    class="form-control" placeholder="{{'EMAIL_ADDRESS'| translate}}"
-                                   ng-model-options="{ debounce : 1000}" required validate-email
+                                   ng-model-options="{ debounce : 1000}" required validate-email id="registration-email"
                                    ng-class="{'is-invalid':register.registrationEmail.$invalid,
                                    'is-valid':register.registrationEmail.$valid}" ng-trim="false"
                                    ng-keydown="runSpin($event, 'emailCheck', 'emailSpin')"
                                    ng-keypress="emailCheck = false; emailSpin = true">
                             <div class="loader animate-show-hide" ng-show="emailSpin == true"></div>
                             <div class="fas fa-check fa-2x validation-success animate-show-hide"
-                                 ng-show="emailSpin == false && register.registrationEmail.$valid"></div>
+                                 ng-show="emailSpin == false && register.registrationEmail.$valid"
+                                 id="email-success"></div>
                             <div class="fas fa-times fa-2x validation-failure animate-show-hide"
                                  ng-show="emailSpin == false && register.registrationEmail.$invalid
-                                 && !register.registrationEmail.$pristine"></div>
+                                 && !register.registrationEmail.$pristine" id="email-error"></div>
                         </div>
                         <div ng-messages="register.registrationEmail.$error" class="help-block">
                             <div ng-message="email" translate="EMAIL_PATTERN"></div>
@@ -132,7 +134,7 @@
                                    tabindex="3" class="form-control" placeholder="{{'PASSWORD'| translate}}" required
                                    ng-class="{'is-invalid':register.registrationPassword.$invalid,
                                    'is-valid':register.registrationPassword.$valid}" ng-minlength="8" ng-maxlength="30"
-                                   ng-pattern="/^(?=.*\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я]).*$/">
+                                   ng-pattern="/^(?=.*\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я]).*$/" id="registrationPassword">
                         </div>
                         <div ng-messages="register.registrationPassword.$error" class="help-block">
                             <div ng-message="minlength" translate="MIN_LENGTH" translate-value-length="8"></div>
@@ -141,7 +143,7 @@
                         </div>
                         <div class="form-group">
                             <input type="password" name="registrationPasswordConfirm"
-                                   ng-model="registrationPasswordConfirm"
+                                   ng-model="registrationPasswordConfirm" id="registrationPasswordConfirm"
                                    tabindex="4" class="form-control" placeholder="{{'CONFIRM_PASSWORD'| translate}}"
                                    ng-class="{'is-invalid':register.registrationPasswordConfirm.$invalid,
                                    'is-valid':register.registrationPasswordConfirm.$valid}"
@@ -151,7 +153,7 @@
                             <div ng-message="match" translate="PASSWORDS_MUST_MATCH"></div>
                         </div>
                         <button type="submit" name="register-submit" tabindex="5"
-                                class="form-control btn btn-register"
+                                class="form-control btn btn-register" id="register-submit"
                                 ng-disabled="register.$invalid || loginCheck == false || emailCheck == false"
                                 translate="REGISTER_NOW"></button>
                     </form>
