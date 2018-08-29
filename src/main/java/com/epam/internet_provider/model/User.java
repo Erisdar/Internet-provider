@@ -1,10 +1,8 @@
 package com.epam.internet_provider.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
-import java.beans.ConstructorProperties;
 import java.util.List;
 
 @Data
@@ -30,5 +28,4 @@ public class User {
   private Status status;
   private Tariff tariff;
   private List<Reward> rewards;
-
 }

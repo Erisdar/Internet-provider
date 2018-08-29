@@ -1,8 +1,7 @@
-package com.epam.internet_provider.util;
+package com.epam.internet_provider.service.impl;
 
+import com.epam.internet_provider.service.DecryptionService;
 import io.vavr.control.Try;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 import javax.crypto.Cipher;
 import java.security.KeyFactory;
@@ -12,38 +11,39 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.function.Function;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class DecryptionUtil {
-  // TODO
+public class DecryptionServiceImpl implements DecryptionService {
   private static final int KEY_SIZE = 1024;
-  private static KeyPair KEY_PAIR;
 
-  private static void generateKeys() {
-    KeyPairGenerator keyPairGenerator = Try.of(() -> KeyPairGenerator.getInstance("RSA")).get();
-    keyPairGenerator.initialize(KEY_SIZE);
-    KEY_PAIR = keyPairGenerator.genKeyPair();
+  private static class LazyKeysHolder {
+    static final KeyPair KEY_PAIR = generateKeys();
   }
 
-  public static String decryptString(String encrypted) {
+  private static KeyPair generateKeys() {
+    KeyPairGenerator keyPairGenerator = Try.of(() -> KeyPairGenerator.getInstance("RSA")).get();
+    keyPairGenerator.initialize(KEY_SIZE);
+    return keyPairGenerator.genKeyPair();
+  }
+
+  @Override
+  public String decryptString(String encrypted) {
     return Try.of(
             () -> {
               Cipher cipher = Cipher.getInstance("RSA");
-              cipher.init(Cipher.DECRYPT_MODE, KEY_PAIR.getPrivate());
+              cipher.init(Cipher.DECRYPT_MODE, LazyKeysHolder.KEY_PAIR.getPrivate());
               return new String(cipher.doFinal(Base64.getDecoder().decode(encrypted)));
             })
         .getOrElseThrow((Function<Throwable, RuntimeException>) RuntimeException::new);
   }
 
-  public static String getPublicKey() {
-    if (KEY_PAIR == null) {
-      generateKeys();
-    }
+  @Override
+  public String getPublicKey() {
     return Try.of(
             () ->
                 Base64.getEncoder()
                     .encodeToString(
                         KeyFactory.getInstance("RSA")
-                            .getKeySpec(KEY_PAIR.getPublic(), X509EncodedKeySpec.class)
+                            .getKeySpec(
+                                LazyKeysHolder.KEY_PAIR.getPublic(), X509EncodedKeySpec.class)
                             .getEncoded()))
         .get();
   }

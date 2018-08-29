@@ -4,9 +4,9 @@ import java.util.Map;
 
 public interface JwtTokenService {
 
-    String issueToken(String login, String role);
+  String issueToken(String login, String role);
 
-    Map<String, String> parseToken(String token);
+  Map<String, String> parseToken(String token);
 
-    int getExpirationTimeInSeconds();
+  int getExpirationTimeInSeconds();
 }

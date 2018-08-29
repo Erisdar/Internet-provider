@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface RewardDao {
 
-    List<Reward> getRewards();
+  List<Reward> getRewards();
 
-    boolean addReward(int reward_id, String login);
-
+  boolean addReward(int reward_id, String login);
 }

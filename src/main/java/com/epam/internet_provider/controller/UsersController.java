@@ -23,9 +23,7 @@ public class UsersController extends HttpServlet {
     Try.run(
             () -> {
               response.setContentType("application/json");
-              response
-                  .getWriter()
-                  .print(new ObjectMapper().writeValueAsString(userDao.getUsers()));
+              response.getWriter().print(new ObjectMapper().writeValueAsString(userDao.getUsers()));
             })
         .orElseRun(throwable -> response.setStatus(Response.SC_UNAUTHORIZED));
   }

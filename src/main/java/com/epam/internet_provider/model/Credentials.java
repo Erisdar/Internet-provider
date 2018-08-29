@@ -11,10 +11,13 @@ import javax.persistence.Column;
 public class Credentials {
 
   @Column(name = "login")
-  @NonNull private String login;
+  @NonNull
+  private String login;
 
   @Column(name = "password")
-  @NonNull private String password;
+  @NonNull
+  private String password;
+
   private Status status;
   private Role role;
 }
