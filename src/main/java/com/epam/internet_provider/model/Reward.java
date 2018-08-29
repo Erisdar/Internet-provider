@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
-
+/**
+ * Class Reward that has properties: {@link Reward#rewardId}, {@link Reward#title}, {@link
+ * Reward#bonusPoints} and {@link Reward#imgHref}.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

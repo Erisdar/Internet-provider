@@ -18,6 +18,12 @@ public final class UserUtil {
   private static final int DEFAULT_CASH = 0;
   private static DecryptionService decryptionService = new DecryptionServiceImpl();
 
+  /**
+   * Reads the json object with user data, and returns initialized User object.
+   *
+   * @param userJson The json with user data.
+   * @return initialized object of User.class
+   */
   public static User createDefaultUser(JSONObject userJson) {
     final User user = new User();
     user.setLogin(userJson.getString("login"));

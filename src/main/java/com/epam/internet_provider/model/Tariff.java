@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
-
+/**
+ * Class Tariff that has properties: {@link Tariff#id}, {@link Tariff#title}, {@link Tariff#cost},
+ * {@link Tariff#downloadSpeed}, {@link Tariff#uploadSpeed}, {@link Tariff#traffic} and {@link Tariff#imgUrl}.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

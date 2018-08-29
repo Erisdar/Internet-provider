@@ -8,6 +8,12 @@ import org.json.JSONObject;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TariffUtil {
+  /**
+   * Reads the json object with tariff data, and returns initialized Tariff object.
+   *
+   * @param tariffJson The json with tariff data.
+   * @return initialized object of Tariff.class
+   */
   public static Tariff createTariff(JSONObject tariffJson) {
     final Tariff tariff = new Tariff();
     tariff.setId(Try.of(() -> tariffJson.getInt("id")).getOrElse(0));
