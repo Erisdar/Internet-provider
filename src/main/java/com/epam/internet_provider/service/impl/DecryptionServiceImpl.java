@@ -9,9 +9,9 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
-import java.util.function.Function;
 
 public class DecryptionServiceImpl implements DecryptionService {
+
   private static final int KEY_SIZE = 1024;
 
   private static class LazyKeysHolder {
@@ -32,7 +32,7 @@ public class DecryptionServiceImpl implements DecryptionService {
               cipher.init(Cipher.DECRYPT_MODE, LazyKeysHolder.KEY_PAIR.getPrivate());
               return new String(cipher.doFinal(Base64.getDecoder().decode(encrypted)));
             })
-        .getOrElseThrow((Function<Throwable, RuntimeException>) RuntimeException::new);
+        .getOrNull();
   }
 
   @Override

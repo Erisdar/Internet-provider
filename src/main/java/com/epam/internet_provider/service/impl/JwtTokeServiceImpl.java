@@ -31,7 +31,7 @@ public class JwtTokeServiceImpl implements JwtTokenService {
                     .claim("role", role)
                     .signWith(SignatureAlgorithm.HS256, jwtTokenConfig.getKey())
                     .compact())
-        .get();
+        .getOrNull();
   }
 
   @Override

@@ -25,16 +25,20 @@ public class RegistrationController extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
     final JSONObject userJson = JsonUtil.parseData(Try.of(req::getReader).get());
-    Optional.of(UserUtil.createDefaultUser(userJson))
-        .ifPresent(
-            user -> {
-              if (userDao.registerUser(user)) {
-                resp.addCookie(CookieUtil.createCookie(user.getLogin(), user.getRole()));
-                resp.setHeader("User", user.getLogin());
-                resp.setStatus(Response.SC_CREATED);
-              } else {
-                resp.setStatus(Response.SC_BAD_REQUEST);
-              }
-            });
+    Try.run(
+            () ->
+                Optional.of(UserUtil.createDefaultUser(userJson))
+                    .ifPresent(
+                        user -> {
+                          if (userDao.registerUser(user)) {
+                            resp.addCookie(
+                                CookieUtil.createCookie(user.getLogin(), user.getRole()));
+                            resp.setHeader("User", user.getLogin());
+                            resp.setStatus(Response.SC_CREATED);
+                          } else {
+                            resp.setStatus(Response.SC_BAD_REQUEST);
+                          }
+                        }))
+        .orElseRun(e -> resp.setStatus(Response.SC_BAD_REQUEST));
   }
 }

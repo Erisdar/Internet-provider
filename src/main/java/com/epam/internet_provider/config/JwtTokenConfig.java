@@ -2,6 +2,8 @@ package com.epam.internet_provider.config;
 
 import io.vavr.control.Try;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
@@ -10,7 +12,7 @@ import java.util.Objects;
 
 @Data
 public class JwtTokenConfig {
-
+  private static final Logger LOG = LogManager.getLogger(JwtTokenConfig.class);
   private static final String TOKEN_CONFIG_PATH = "application.yml";
   private static final String JWT_ROOT = "jwt";
   private static final String JWT_KEY = "key";
@@ -20,7 +22,6 @@ public class JwtTokenConfig {
   private String name;
   private int expirationHours;
 
-  @SuppressWarnings("unchecked")
   private JwtTokenConfig() {
     Try.withResources(
             () ->
@@ -28,13 +29,18 @@ public class JwtTokenConfig {
                     Objects.requireNonNull(
                             getClass().getClassLoader().getResource(TOKEN_CONFIG_PATH))
                         .getFile()))
-        .of(stream -> (Map<String, Map<String, ?>>) new Yaml().load(stream))
-        .forEach(
-            configMap -> {
+        .of(
+            stream -> {
+              Map<String, Map<String, ?>> configMap = new Yaml().load(stream);
               this.key = (String) configMap.get(JWT_ROOT).get(JWT_KEY);
               this.name = (String) configMap.get(JWT_ROOT).get(JWT_NAME);
               this.expirationHours = (Integer) configMap.get(JWT_ROOT).get(JWT_EXPIRATION);
-            });
+              return true;
+            })
+        .orElseRun(
+            e ->
+                LOG.error(
+                    "IllegalStateException was throws in process of reading token config path", e));
   }
 
   private static class LazyJwtConfigHolder {

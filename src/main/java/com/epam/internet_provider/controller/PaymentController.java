@@ -20,12 +20,13 @@ public class PaymentController extends HttpServlet {
 
   @Override
   protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
-    Try.run(
-            () -> {
-              final String login = String.valueOf(req.getAttribute("login"));
-              final int cash = JsonUtil.parseData(req.getReader()).getInt("cash");
-              userDao.updateCash(login, cash);
-            })
-        .orElseRun(throwable -> resp.setStatus(Response.SC_SERVICE_UNAVAILABLE));
+
+    final String login = String.valueOf(req.getAttribute("login"));
+    final int cash = JsonUtil.parseData(Try.of(req::getReader).get()).getInt("cash");
+    if (userDao.updateCash(login, cash)) {
+      resp.setStatus(Response.SC_OK);
+    } else {
+      resp.setStatus(Response.SC_SERVICE_UNAVAILABLE);
+    }
   }
 }

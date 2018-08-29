@@ -9,6 +9,8 @@ import com.epam.internet_provider.util.JsonUtil;
 import com.epam.internet_provider.util.TariffUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vavr.control.Try;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Response;
 
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,7 @@ import java.util.function.Supplier;
     urlPatterns = {"/tariff"})
 public class TariffController extends HttpServlet {
 
+  private static final Logger LOG = LogManager.getLogger(TariffController.class);
   private TariffDao tariffDao = new TariffDaoImpl();
 
   @Override
@@ -34,7 +37,11 @@ public class TariffController extends HttpServlet {
                   .getWriter()
                   .print(new ObjectMapper().writeValueAsString(tariffDao.getTariffs()));
             })
-        .orElseRun(throwable -> response.setStatus(Response.SC_UNAUTHORIZED));
+        .orElseRun(
+            e -> {
+              LOG.error("IllegalStateException was throws in process of getting tariffs ", e);
+              response.setStatus(Response.SC_UNAUTHORIZED);
+            });
   }
 
   @Override
@@ -70,7 +77,9 @@ public class TariffController extends HttpServlet {
         .map(
             role -> {
               if (!action.get()) {
-                resp.setStatus(Response.SC_FORBIDDEN);
+                resp.setStatus(Response.SC_BAD_REQUEST);
+              } else {
+                resp.setStatus(Response.SC_OK);
               }
               return true;
             })

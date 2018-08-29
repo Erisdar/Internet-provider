@@ -4,15 +4,11 @@ import com.epam.internet_provider.connection.DbConnectionPool;
 import com.epam.internet_provider.dao.UserDao;
 import com.epam.internet_provider.model.*;
 import io.vavr.control.Try;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jooq.impl.DSL;
 
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
-
-  private static final Logger LOG = LogManager.getLogger(UserDaoImpl.class);
 
   private static final String INSERT_NEW =
       "INSERT INTO internet_provider.user "
@@ -66,11 +62,7 @@ public class UserDaoImpl implements UserDao {
                       user.getCash());
               return true;
             })
-        .getOrElseGet(
-            e -> {
-              LOG.error("Runtime exception was throw in process of registerUser: ", e);
-              return false;
-            });
+        .getOrElse(false);
   }
 
   @Override

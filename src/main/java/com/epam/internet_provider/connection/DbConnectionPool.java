@@ -6,7 +6,6 @@ import io.vavr.control.Try;
 
 import java.sql.Connection;
 import java.util.Objects;
-import java.util.function.Function;
 
 public class DbConnectionPool {
 
@@ -30,7 +29,6 @@ public class DbConnectionPool {
   }
 
   public Connection getConnection() {
-    return Try.of(() -> dataSource.getConnection())
-        .getOrElseThrow((Function<Throwable, RuntimeException>) RuntimeException::new);
+    return Try.of(() -> dataSource.getConnection()).getOrNull();
   }
 }

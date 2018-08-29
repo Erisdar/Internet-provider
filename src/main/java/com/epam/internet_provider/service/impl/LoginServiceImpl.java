@@ -24,6 +24,6 @@ public class LoginServiceImpl implements LoginService {
                         decryptionService.decryptString(authData.getPassword()),
                         credentials.getPassword())
                     && credentials.getStatus() != Status.Banned)
-        .orElseThrow(IllegalStateException::new);
+        .orElse(null);
   }
 }

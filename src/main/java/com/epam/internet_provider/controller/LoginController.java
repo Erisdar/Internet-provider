@@ -1,6 +1,7 @@
 package com.epam.internet_provider.controller;
 
 import com.epam.internet_provider.model.Credentials;
+import com.epam.internet_provider.model.Status;
 import com.epam.internet_provider.service.LoginService;
 import com.epam.internet_provider.service.impl.LoginServiceImpl;
 import com.epam.internet_provider.util.CookieUtil;
@@ -32,7 +33,8 @@ public class LoginController extends HttpServlet {
                                 new Credentials(
                                     jsonObject.getString("login"),
                                     jsonObject.getString("password"))))
-                    .ifPresent(
+                    .filter(credentials -> credentials.getStatus() != Status.Banned)
+                    .map(
                         credentials -> {
                           resp.addCookie(
                               CookieUtil.createCookie(
@@ -40,7 +42,8 @@ public class LoginController extends HttpServlet {
                           resp.setHeader("user", credentials.getLogin());
                           resp.setHeader("role", credentials.getRole().name());
                           resp.setStatus(Response.SC_OK);
+                          return true;
                         }))
-        .orElseRun(throwable -> resp.setStatus(Response.SC_FORBIDDEN));
+        .orElseRun(e -> resp.setStatus(Response.SC_FORBIDDEN));
   }
 }
