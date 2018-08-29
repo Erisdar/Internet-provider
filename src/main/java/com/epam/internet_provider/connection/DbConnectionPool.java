@@ -10,26 +10,27 @@ import java.util.function.Function;
 
 public class DbConnectionPool {
 
-    private static final String DB_RESOURCE = "db.properties";
-    private HikariDataSource dataSource;
-    private static DbConnectionPool instance;
+  private static final String DB_RESOURCE = "db.properties";
+  private HikariDataSource dataSource;
 
-    private DbConnectionPool() {
-        dataSource = new HikariDataSource(new HikariConfig(Objects.requireNonNull(getClass().getClassLoader()
-                .getResource(DB_RESOURCE)).getFile()));
-    }
+  private DbConnectionPool() {
+    dataSource =
+        new HikariDataSource(
+            new HikariConfig(
+                Objects.requireNonNull(getClass().getClassLoader().getResource(DB_RESOURCE))
+                    .getFile()));
+  }
 
-    public static DbConnectionPool getInstance() {
-        //TODO
-        if (instance == null) {
-            instance = new DbConnectionPool();
-        }
-        return instance;
-    }
+  private static class LazyHolder {
+    static final DbConnectionPool INSTANCE = new DbConnectionPool();
+  }
 
-    public Connection getConnection() {
-        return Try.of(() -> dataSource.getConnection())
-                .getOrElseThrow((Function<Throwable, RuntimeException>) RuntimeException::new);
-    }
+  public static DbConnectionPool getInstance() {
+    return LazyHolder.INSTANCE;
+  }
 
+  public Connection getConnection() {
+    return Try.of(() -> dataSource.getConnection())
+        .getOrElseThrow((Function<Throwable, RuntimeException>) RuntimeException::new);
+  }
 }
