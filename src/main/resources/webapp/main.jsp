@@ -37,13 +37,16 @@
 </jsp:include>
 <div class="content-container">
     <div class="carousel-container">
-        <div id="carouselControls" class="carousel slide" data-pause="false" data-ride="carousel">
+        <div id="carouselControls" class="carousel slide" data-pause="false" data-ride="carousel" data-interval="3500">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block" src="img/boy.jpg" alt="First slide">
+                    <img class="d-block" src="img/aboutCompany.jpg" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block" src="img/letaet-vo-sne.jpg" alt="Second slide">
+                    <img class="d-block" src="img/boy.jpg" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block" src="img/letaet-vo-sne.jpg" alt="Third slide">
                 </div>
             </div>
         </div>
