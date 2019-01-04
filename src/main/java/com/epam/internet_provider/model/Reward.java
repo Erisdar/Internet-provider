@@ -1,28 +1,41 @@
 package com.epam.internet_provider.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-/**
- * Class Reward that has properties: {@link Reward#rewardId}, {@link Reward#title}, {@link
- * Reward#bonusPoints} and {@link Reward#imgHref}.
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import lombok.Data;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table
+@Entity
 public class Reward {
 
-  @Column(name = "reward_id")
+  @Id
+  @Column
+  @GeneratedValue(generator = "increment")
+  @GenericGenerator(name = "increment", strategy = "increment")
   private int rewardId;
 
-  @Column(name = "title")
+  @Column(nullable = false, unique = true)
   private String title;
 
-  @Column(name = "bonus_points")
+  @Column(nullable = false)
   private int bonusPoints;
 
-  @Column(name = "img_href")
+  @Column(nullable = false)
   private String imgHref;
+
+  @ManyToMany(
+      mappedBy = "rewards",
+      cascade = {CascadeType.MERGE})
+  private List<User> users;
 }

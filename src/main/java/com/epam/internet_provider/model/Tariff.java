@@ -1,37 +1,40 @@
 package com.epam.internet_provider.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
-/**
- * Class Tariff that has properties: {@link Tariff#id}, {@link Tariff#title}, {@link Tariff#cost},
- * {@link Tariff#downloadSpeed}, {@link Tariff#uploadSpeed}, {@link Tariff#traffic} and {@link Tariff#imgUrl}.
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import lombok.Data;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table
+@Entity
 public class Tariff {
 
-  @Column(name = "tariff_id")
-  private int id;
+  @Id
+  @Column
+  @GeneratedValue(generator = "increment")
+  @GenericGenerator(name = "increment", strategy = "increment")
+  private int tariffId;
 
-  @Column(name = "title")
+  @Column(unique = true)
   private String title;
 
-  @Column(name = "cost")
+  @Column(nullable = false)
   private int cost;
 
-  @Column(name = "download_speed")
+  @Column(nullable = false)
   private int downloadSpeed;
 
-  @Column(name = "upload_speed")
+  @Column(nullable = false)
   private int uploadSpeed;
 
-  @Column(name = "traffic")
+  @Column(nullable = false)
   private int traffic;
 
-  @Column(name = "img_url")
-  private String imgUrl;
+  @Column private String imgUrl;
 }

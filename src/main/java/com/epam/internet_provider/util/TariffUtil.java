@@ -16,7 +16,7 @@ public final class TariffUtil {
    */
   public static Tariff createTariff(JSONObject tariffJson) {
     final Tariff tariff = new Tariff();
-    tariff.setId(Try.of(() -> tariffJson.getInt("id")).getOrElse(0));
+    tariff.setTariffId(Try.of(() -> tariffJson.getInt("userId")).getOrElse(0));
     tariff.setTitle(tariffJson.getString("title"));
     tariff.setDownloadSpeed(tariffJson.getInt("downloadSpeed"));
     tariff.setUploadSpeed(tariffJson.getInt("uploadSpeed"));

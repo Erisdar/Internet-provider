@@ -97,17 +97,17 @@ app.directive('validateEmail', ['$http', function ($http) {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelCtrl) {
             ngModelCtrl.$asyncValidators.emailValidator = function (modelValue, viewValue) {
-                return $http.get('/userData', {params: {value: modelValue || viewValue, field: 'email'}})
-                    .then(function () {
+                return $http.get('/users/search/email', {params: {email: modelValue || viewValue}})
+                    .then(function (response) {
+                    if(response.data){
                         ngModelCtrl.$setValidity('validateEmail', false);
                         scope.emailSpin = false;
-                        return false;
-                    }, function () {
+                    } else {
                         ngModelCtrl.$setValidity('validateEmail', true);
                         scope.emailSpin = false;
                         scope.emailCheck = true;
-                        return true;
-                    });
+                    }
+                });
             }
         }
     };
@@ -118,17 +118,17 @@ app.directive('validateLogin', ['$http', function ($http) {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelCtrl) {
             ngModelCtrl.$asyncValidators.loginValidator = function (modelValue, viewValue) {
-                return $http.get('/userData', {params: {value: modelValue || viewValue, field: 'login'}})
-                    .then(function () {
-                        ngModelCtrl.$setValidity('validateLogin', false);
-                        scope.loginSpin = false;
-                        return false;
-                    }, function () {
-                        ngModelCtrl.$setValidity('validateLogin', true);
-                        scope.loginSpin = false;
-                        scope.loginCheck = true;
-                        return true;
-                    });
+                return $http.get('users/search/login', {params: {login: modelValue || viewValue}})
+                    .then(function (response) {
+                    if(response.data){
+                      ngModelCtrl.$setValidity('validateLogin', false);
+                      scope.loginSpin = false;
+                    } else {
+                      ngModelCtrl.$setValidity('validateLogin', true);
+                      scope.loginSpin = false;
+                      scope.loginCheck = true;
+                    }
+                });
             }
         }
     };

@@ -1,12 +1,10 @@
 package com.epam.internet_provider.dao.impl;
 
-import com.epam.internet_provider.connection.DbConnectionPool;
-import com.epam.internet_provider.dao.UserDao;
-import com.epam.internet_provider.model.*;
-import io.vavr.control.Try;
-import org.jooq.impl.DSL;
-
 import java.util.List;
+
+import com.epam.internet_provider.dao.UserDao;
+import com.epam.internet_provider.model.Credentials;
+import com.epam.internet_provider.model.User;
 
 public class UserDaoImpl implements UserDao {
 
@@ -43,128 +41,134 @@ public class UserDaoImpl implements UserDao {
       "UPDATE internet_provider.user set status = ? where login = ? ";
   private static String GET_USER_DATA = "SELECT %s from user where %s = ?";
 
-  private DbConnectionPool connectionPool = DbConnectionPool.getInstance();
-
   @Override
   public boolean registerUser(User user) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            connection -> {
-              DSL.using(connection)
-                  .execute(
-                      INSERT_NEW,
-                      user.getLogin(),
-                      user.getPassword(),
-                      user.getEmail(),
-                      user.getRole().getValue(),
-                      user.getStatus().getValue(),
-                      user.getBonusAmount(),
-                      user.getCash());
-              return true;
-            })
-        .getOrElse(false);
+      return true;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            connection -> {
+//              DSL.using(connection)
+//                  .execute(
+//                      INSERT_NEW,
+//                      user.getLogin(),
+//                      user.getPassword(),
+//                      user.getEmail(),
+//                      user.getRole().getValue(),
+//                      user.getStatus().getValue(),
+//                      user.getBonusAmount(),
+//                      user.getCash());
+//              return true;
+//            })
+//        .getOrElse(false);
   }
 
   @Override
   public List<User> getUsers() {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            connection ->
-                DSL.using(connection)
-                    .fetch(SELECT_USERS)
-                    .map(
-                        record -> {
-                          User user = record.into(User.class);
-                          user.setTariff(record.into(Tariff.class));
-                          user.setStatus(
-                              Status.getStatus(record.getValue("status", Integer.class)));
-                          return user;
-                        }))
-        .getOrNull();
+      return null;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            connection ->
+//                DSL.using(connection)
+//                    .fetch(SELECT_USERS)
+//                    .map(
+//                        record -> {
+//                          User user = record.into(User.class);
+//                          user.setTariff(record.into(Tariff.class));
+//                          user.setStatus(
+//                              Status.getStatus(record.getValue("status", Integer.class)));
+//                          return user;
+//                        }))
+//        .getOrNull();
   }
 
   @Override
   public User getUser(String login) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            connection ->
-                DSL.using(connection)
-                    .fetchOne(SELECT_USER, login)
-                    .map(
-                        record -> {
-                          User user = record.into(User.class);
-                          user.setTariff(record.into(Tariff.class));
-                          user.setRewards(
-                              DSL.using(connection)
-                                  .fetch(SELECT_REWARDS, login)
-                                  .into(Reward.class));
-                          user.setStatus(
-                              Status.getStatus(record.getValue("status", Integer.class)));
-                          user.setRole(Role.getRole(record.getValue("role", Integer.class)));
-                          return user;
-                        }))
-        .getOrNull();
+      return null;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            connection ->
+//                DSL.using(connection)
+//                    .fetchOne(SELECT_USER, login)
+//                    .map(
+//                        record -> {
+//                          User user = record.into(User.class);
+//                          user.setTariff(record.into(Tariff.class));
+//                          user.setRewards(
+//                              DSL.using(connection)
+//                                  .fetch(SELECT_REWARDS, login)
+//                                  .into(Reward.class));
+//                          user.setStatus(
+//                              Status.getStatus(record.getValue("status", Integer.class)));
+//                          user.setRole(Role.getRole(record.getValue("role", Integer.class)));
+//                          return user;
+//                        }))
+//        .getOrNull();
   }
 
   @Override
   public Credentials getCredentials(String login) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            (connection) ->
-                DSL.using(connection)
-                    .fetchOne(SELECT_CREDENTIALS, login)
-                    .map(
-                        record -> {
-                          Credentials credentials = record.into(Credentials.class);
-                          credentials.setRole(Role.getRole(record.getValue("role", Integer.class)));
-                          credentials.setStatus(
-                              Status.getStatus(record.getValue("status", Integer.class)));
-                          return credentials;
-                        }))
-        .getOrNull();
+      return null;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            (connection) ->
+//                DSL.using(connection)
+//                    .fetchOne(SELECT_CREDENTIALS, login)
+//                    .map(
+//                        record -> {
+//                          Credentials credentials = record.into(Credentials.class);
+//                          credentials.setRole(Role.getRole(record.getValue("role", Integer.class)));
+//                          credentials.setStatus(
+//                              Status.getStatus(record.getValue("status", Integer.class)));
+//                          return credentials;
+//                        }))
+//        .getOrNull();
   }
 
   @Override
   public String getData(String value, String field) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            connection ->
-                DSL.using(connection)
-                    .fetchOne(String.format(GET_USER_DATA, field, field), value)
-                    .map(record -> record.getValue(field, String.class)))
-        .get();
+      return null;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            connection ->
+//                DSL.using(connection)
+//                    .fetchOne(String.format(GET_USER_DATA, field, field), value)
+//                    .map(record -> record.getValue(field, String.class)))
+//        .get();
   }
 
   @Override
   public boolean updateCash(String login, int cash) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            (connection) -> {
-              DSL.using(connection).execute(UPDATE_CASH, cash, login);
-              return true;
-            })
-        .getOrElse(false);
+      return true;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            (connection) -> {
+//              DSL.using(connection).execute(UPDATE_CASH, cash, login);
+//              return true;
+//            })
+//        .getOrElse(false);
   }
 
   @Override
   public boolean updateTariff(String login, int tariff_id) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(
-            (connection) -> {
-              if (tariff_id < 0) {
-                DSL.using(connection).execute(DELETE_TARIFF, login);
-              } else {
-                DSL.using(connection).execute(UPDATE_TARIFF, tariff_id, login);
-              }
-              return true;
-            })
-        .getOrElse(false);
+      return true;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(
+//            (connection) -> {
+//              if (tariff_id < 0) {
+//                DSL.using(connection).execute(DELETE_TARIFF, login);
+//              } else {
+//                DSL.using(connection).execute(UPDATE_TARIFF, tariff_id, login);
+//              }
+//              return true;
+//            })
+//        .getOrElse(false);
   }
 
   @Override
   public boolean changeStatus(String login, int status) {
-    return Try.withResources(() -> connectionPool.getConnection())
-        .of(connection -> DSL.using(connection).fetch(UPDATE_STATUS, status, login).isNotEmpty())
-        .getOrElse(false);
+      return true;
+//    return Try.withResources(() -> connectionPool.getConnection())
+//        .of(connection -> DSL.using(connection).fetch(UPDATE_STATUS, status, login).isNotEmpty())
+//        .getOrElse(false);
   }
 }
