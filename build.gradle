@@ -13,6 +13,7 @@ sourceCompatibility = 1.8
 dependencies {
     ext {
         springBootVersion = "2.1.1.RELEASE"
+        springVersion ="5.1.2.RELEASE"
     }
 
     testCompile "junit:junit:4.12"
@@ -23,6 +24,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+    compile "org.springframework.security:spring-security-web:${springVersion}"
+    compile "org.springframework.security:spring-security-config:${springVersion}"
 
     compile "javax.xml.bind:jaxb-api:2.3.0"
     compileOnly "org.projectlombok:lombok:1.18.4"

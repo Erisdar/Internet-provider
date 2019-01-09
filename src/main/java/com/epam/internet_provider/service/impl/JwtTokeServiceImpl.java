@@ -5,6 +5,8 @@ import com.epam.internet_provider.service.JwtTokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.vavr.control.Try;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -13,9 +15,15 @@ import java.util.stream.Collectors;
 
 import static java.time.ZoneOffset.UTC;
 
+@Service
 public class JwtTokeServiceImpl implements JwtTokenService {
 
-  private JwtTokenConfig jwtTokenConfig = JwtTokenConfig.getInstance();
+  private final JwtTokenConfig jwtConfig;
+
+  @Autowired
+  public JwtTokeServiceImpl(final JwtTokenConfig jwtConfig) {
+    this.jwtConfig = jwtConfig;
+  }
 
   @Override
   public String issueToken(String login, String role) {
@@ -25,11 +33,11 @@ public class JwtTokeServiceImpl implements JwtTokenService {
                     .setExpiration(
                         Date.from(
                             LocalDateTime.now()
-                                .plusHours(jwtTokenConfig.getExpirationHours())
+                                .plusHours(jwtConfig.getExpirationHours())
                                 .toInstant(UTC)))
                     .claim("login", login)
                     .claim("role", role)
-                    .signWith(SignatureAlgorithm.HS256, jwtTokenConfig.getKey())
+                    .signWith(SignatureAlgorithm.HS256, jwtConfig.getKey())
                     .compact())
         .getOrNull();
   }
@@ -37,7 +45,7 @@ public class JwtTokeServiceImpl implements JwtTokenService {
   @Override
   public Map<String, String> parseToken(String token) {
     return Jwts.parser()
-        .setSigningKey(jwtTokenConfig.getKey())
+        .setSigningKey(jwtConfig.getKey())
         .parseClaimsJws(token)
         .getBody()
         .entrySet()
@@ -47,6 +55,6 @@ public class JwtTokeServiceImpl implements JwtTokenService {
 
   @Override
   public int getExpirationTimeInSeconds() {
-    return jwtTokenConfig.getExpirationHours() * 60 * 60;
+    return jwtConfig.getExpirationHours() * 60 * 60;
   }
 }

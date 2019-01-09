@@ -22,7 +22,7 @@
         }
         $rootScope.$on('$locationChangeStart', function () {
             if ($location.path() === "/" && $cookies.get("token")) {
-                $window.location.href = '/main.jsp';
+                $window.location.href = '/main.html';
             }
         });
     });

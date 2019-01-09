@@ -24,7 +24,7 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                     function (response) {
                         $localStorage.user = response.headers().user;
                         $localStorage.role = response.headers().role;
-                        $window.location.href = '/main.jsp';
+                        $window.location.href = '/main.html';
                     }, function () {
                         alert("Bad registration")
                     });
@@ -41,7 +41,7 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                     function (response) {
                         $localStorage.user = response.headers().user;
                         $localStorage.role = response.headers().role;
-                        $window.location.href = '/main.jsp';
+                        $window.location.href = '/main.html';
                     }, function () {
                         alert("Bad login or password");
                     });

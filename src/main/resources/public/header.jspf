@@ -14,7 +14,7 @@
     <div class="w-100">
         <img src="img/bird.png" class="header-bird header-img non-hover-img" alt="Bird">
         <a class="nav-item nav-btn <c:if test='${param.pageTitle == "main"}'>active</c:if>" id="main"
-           href="main.jsp" target="_self" translate="MAIN_PAGE"></a>
+           href="main.html" target="_self" translate="MAIN_PAGE"></a>
         <a class="nav-item nav-btn <c:if test='${param.pageTitle == "tariffs"}'>active</c:if>" id="tariffs"
            href="tariffs.jsp" target="_self" translate="TARIFFS"></a>
         <a class="nav-item nav-btn <c:if test='${param.pageTitle == "office"}'>active</c:if>" id="office"
