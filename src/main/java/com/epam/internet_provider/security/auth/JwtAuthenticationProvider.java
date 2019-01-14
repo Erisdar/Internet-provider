@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,9 +21,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
     String token = (String) authentication.getCredentials();
-//    Claims claims = parser.parseClaimsJws(token).getBody();
-//
-//    PreAuthenticatedAuthenticationToken
+
     return null;
   }
 

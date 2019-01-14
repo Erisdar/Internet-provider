@@ -1,25 +1,31 @@
 package com.epam.internet_provider.config;
 
-import com.epam.internet_provider.security.auth.JwtAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.epam.internet_provider.security.auth.JwtAuthFilter;
+import com.epam.internet_provider.security.auth.JwtAuthenticationProvider;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final JwtAuthenticationProvider authenticationProvider;
+  private final JwtAuthenticationProvider authProvider;
+  private final JwtAuthFilter authFilter;
 
   @Autowired
-  public WebSecurityConfig(JwtAuthenticationProvider authenticationProvider) {
-    this.authenticationProvider = authenticationProvider;
+  public WebSecurityConfig(
+      final JwtAuthenticationProvider authProvider, final JwtAuthFilter authFilter) {
+    this.authProvider = authProvider;
+    this.authFilter = authFilter;
   }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) {
-    auth.authenticationProvider(authenticationProvider);
+    auth.authenticationProvider(authProvider);
   }
 
   @Override
@@ -32,6 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin()
         .loginPage("/")
-        .permitAll();
+        .permitAll()
+        .and()
+        .csrf()
+        .disable()
+        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
   }
 }
