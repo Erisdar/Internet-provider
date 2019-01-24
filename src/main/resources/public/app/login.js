@@ -39,8 +39,8 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
             $http.post('/login', credentials, {headers: {'Content-Type': 'application/json'}})
                 .then(
                     function (response) {
-                        $localStorage.user = response.headers().user;
-                        $localStorage.role = response.headers().role;
+                        $localStorage.user = response.data.login;
+                        $localStorage.token = response.headers().token;
                         $window.location.href = '/main.html';
                     }, function () {
                         alert("Bad login or password");

@@ -1,19 +1,22 @@
 package com.epam.internet_provider.service.impl;
 
-import com.epam.internet_provider.config.JwtTokenConfig;
-import com.epam.internet_provider.service.JwtTokenService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.vavr.control.Try;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import static java.time.ZoneOffset.UTC;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.time.ZoneOffset.UTC;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.epam.internet_provider.config.JwtTokenConfig;
+import com.epam.internet_provider.model.JwtClaims;
+import com.epam.internet_provider.service.JwtTokenService;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.vavr.control.Try;
 
 @Service
 public class JwtTokeServiceImpl implements JwtTokenService {
@@ -35,8 +38,8 @@ public class JwtTokeServiceImpl implements JwtTokenService {
                             LocalDateTime.now()
                                 .plusHours(jwtConfig.getExpirationHours())
                                 .toInstant(UTC)))
-                    .claim("login", login)
-                    .claim("role", role)
+                    .claim(JwtClaims.login.name(), login)
+                    .claim(JwtClaims.role.name(), role)
                     .signWith(SignatureAlgorithm.HS256, jwtConfig.getKey())
                     .compact())
         .getOrNull();
@@ -44,12 +47,8 @@ public class JwtTokeServiceImpl implements JwtTokenService {
 
   @Override
   public Map<String, String> parseToken(String token) {
-    return Jwts.parser()
-        .setSigningKey(jwtConfig.getKey())
-        .parseClaimsJws(token)
-        .getBody()
-        .entrySet()
-        .stream()
+    return Jwts.parser().setSigningKey(jwtConfig.getKey()).parseClaimsJws(token).getBody()
+        .entrySet().stream()
         .collect(Collectors.toMap(Map.Entry::getKey, t -> String.valueOf(t.getValue())));
   }
 

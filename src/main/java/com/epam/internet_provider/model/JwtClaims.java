@@ -1,7 +1,6 @@
 package com.epam.internet_provider.model;
 
-public enum Role
-{
-  User,
-  Admin
+public enum JwtClaims {
+  role,
+  login
 }

@@ -16,15 +16,21 @@
             .useLocalStorage()
             .useSanitizeValueStrategy('escape')
             .useLoaderCache(true);
-    }).run(function ($localStorage, $http, $location, $rootScope, $window, $cookies) {
+    })
+      .run(function ($localStorage, $http, $location, $rootScope, $window, $cookies) {
         if ($localStorage.user) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.token;
         }
         $rootScope.$on('$locationChangeStart', function () {
-            if ($location.path() === "/" && $cookies.get("token")) {
-                $window.location.href = '/main.html';
+            if ($location.path() === "/login.html" && $cookies.get("token")) {
+               $window.location.href = '/main.html';
             }
         });
+//        $rootScope.$on('$locationChangeStart', function () {
+//            if ($location.path() === "/" && $localStorage.user) {
+//                $window.location.href = '/main.html';
+//            }
+//        });
     });
 }(angular));
 

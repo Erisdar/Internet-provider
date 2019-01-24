@@ -16,12 +16,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Table
 @Entity
-public class User {
+public class User
+{
   @Id
   @Column
   @GeneratedValue(generator = "increment")
@@ -40,7 +43,8 @@ public class User {
   @Column(nullable = false)
   private int bonusAmount;
 
-  @Column private int cash;
+  @Column
+  private int cash;
 
   @Enumerated
   @Column(nullable = false, columnDefinition = "TINYINT(1)")
@@ -54,10 +58,13 @@ public class User {
   @JoinColumn(name = "tariff_id")
   private Tariff tariff;
 
-  @ManyToMany(cascade = {CascadeType.MERGE})
-  @JoinTable(
-      name = "user_2reward",
-      joinColumns = {@JoinColumn(name = "user_id")},
-      inverseJoinColumns = {@JoinColumn(name = "reward_id")})
+  @ManyToMany(cascade = {
+    CascadeType.MERGE
+  })
+  @JoinTable(name = "user_2reward", joinColumns = {
+    @JoinColumn(name = "user_id")
+  }, inverseJoinColumns = {
+    @JoinColumn(name = "reward_id")
+  })
   private List<Reward> rewards;
 }

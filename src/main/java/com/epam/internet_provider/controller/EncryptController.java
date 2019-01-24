@@ -1,24 +1,28 @@
-//package com.epam.internet_provider.controller;
-//
-//import com.epam.internet_provider.service.DecryptionService;
-//import com.epam.internet_provider.service.impl.DecryptionServiceImpl;
-//import io.vavr.control.Try;
-//
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//
-//@WebServlet(
-//    name = "EncryptServlet",
-//    urlPatterns = {"/encrypt"})
-//public class EncryptController extends HttpServlet {
-//
-//  private DecryptionService decryptionService = new DecryptionServiceImpl();
-//
-//  @Override
-//  protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-//    response.setContentType("text/plain");
-//    Try.run(() -> response.getWriter().print(decryptionService.getPublicKey()));
-//  }
-//}
+package com.epam.internet_provider.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.epam.internet_provider.service.DecryptionService;
+
+@RestController
+@RequestMapping(path = "/encrypt")
+public class EncryptController
+{
+
+  private DecryptionService decryptionService;
+
+  @Autowired
+  public EncryptController( DecryptionService decryptionService )
+  {
+    this.decryptionService = decryptionService;
+  }
+
+  @GetMapping(produces = "text/plain")
+  public String getPublicKey()
+  {
+    return decryptionService.getPublicKey();
+  }
+}
