@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.epam.internet_provider.model.Role;
 import com.epam.internet_provider.filter.JwtAuthFilter;
+import com.epam.internet_provider.model.Role;
 import com.epam.internet_provider.security.auth.JwtAuthenticationProvider;
 
 import lombok.val;
@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
   {
 
     val patterns = new String[] {
-      "/", "/app/**/*", "/login.html", "/style/**/*", "/img/**/*", "/users/search/login", "/users/search/email",
-      "/encrypt", "/login"
+      "/", "/app/**/*", "/components/*", "/style/**/*", "/img/**/*", "/locale/**/*", "/users/search/login",
+      "/users/search/email", "/encrypt", "/login", "/signin"
     };
 
     http.authorizeRequests()
@@ -52,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
       .hasAnyAuthority( Role.User.name(), Role.Admin.name() )
       .and()
       .formLogin()
-      .loginPage( "/login.html" ).successForwardUrl("/main.html")
+      .loginPage( "/signin" )
+      .successForwardUrl( "/" )
       .and()
       .csrf()
       .disable()

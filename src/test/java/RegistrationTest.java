@@ -18,7 +18,7 @@ public class RegistrationTest {
 
   @Test
   public void loginEmailUniqueValidation() {
-    open("http://localhost:8080/");
+    open("http://localhost:8080/signin");
     $("#register-form").click();
     $("#register-submit").shouldHave(Condition.disabled);
     $("#registration-login#registration-login").setValue("Trogg");

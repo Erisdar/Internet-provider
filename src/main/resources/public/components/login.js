@@ -1,6 +1,7 @@
 var app = angular.module("myApp");
 
-app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $window, $cookies, $translate) {
+function LoginController($scope, $http, $localStorage, $location, $window, $cookies, $translate) {
+
     $scope.userName = $localStorage.user;
     $scope.role = $localStorage.role;
     $scope.loginCheck = false;
@@ -19,13 +20,18 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                 email: email,
                 password: encrypt.encrypt(password)
             };
-            $http.post('/registration', user, {headers: {'Content-Type': 'application/json'}})
+            $http.post('/registration', user, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                 .then(
                     function (response) {
                         $localStorage.user = response.headers().user;
                         $localStorage.role = response.headers().role;
                         $window.location.href = '/main.html';
-                    }, function () {
+                    },
+                    function () {
                         alert("Bad registration")
                     });
         });
@@ -36,13 +42,18 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                 login: login,
                 password: encrypt.encrypt(password)
             };
-            $http.post('/login', credentials, {headers: {'Content-Type': 'application/json'}})
+            $http.post('/login', credentials, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                 .then(
                     function (response) {
                         $localStorage.user = response.data.login;
                         $localStorage.token = response.headers().token;
                         $window.location.href = '/main.html';
-                    }, function () {
+                    },
+                    function () {
                         alert("Bad login or password");
                     });
         });
@@ -69,7 +80,7 @@ app.controller("loginCtrl", function ($scope, $http, $localStorage, $location, $
                 callback(encrypt);
             })
     };
-});
+};
 
 app.directive('validateEquals', function () {
     return {
@@ -97,17 +108,21 @@ app.directive('validateEmail', ['$http', function ($http) {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelCtrl) {
             ngModelCtrl.$asyncValidators.emailValidator = function (modelValue, viewValue) {
-                return $http.get('/users/search/email', {params: {email: modelValue || viewValue}})
+                return $http.get('/users/search/email', {
+                        params: {
+                            email: modelValue || viewValue
+                        }
+                    })
                     .then(function (response) {
-                    if(response.data){
-                        ngModelCtrl.$setValidity('validateEmail', false);
-                        scope.emailSpin = false;
-                    } else {
-                        ngModelCtrl.$setValidity('validateEmail', true);
-                        scope.emailSpin = false;
-                        scope.emailCheck = true;
-                    }
-                });
+                        if (response.data) {
+                            ngModelCtrl.$setValidity('validateEmail', false);
+                            scope.emailSpin = false;
+                        } else {
+                            ngModelCtrl.$setValidity('validateEmail', true);
+                            scope.emailSpin = false;
+                            scope.emailCheck = true;
+                        }
+                    });
             }
         }
     };
@@ -118,20 +133,29 @@ app.directive('validateLogin', ['$http', function ($http) {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelCtrl) {
             ngModelCtrl.$asyncValidators.loginValidator = function (modelValue, viewValue) {
-                return $http.get('users/search/login', {params: {login: modelValue || viewValue}})
+                return $http.get('users/search/login', {
+                        params: {
+                            login: modelValue || viewValue
+                        }
+                    })
                     .then(function (response) {
-                    if(response.data){
-                      ngModelCtrl.$setValidity('validateLogin', false);
-                      scope.loginSpin = false;
-                    } else {
-                      ngModelCtrl.$setValidity('validateLogin', true);
-                      scope.loginSpin = false;
-                      scope.loginCheck = true;
-                    }
-                });
+                        if (response.data) {
+                            ngModelCtrl.$setValidity('validateLogin', false);
+                            scope.loginSpin = false;
+                        } else {
+                            ngModelCtrl.$setValidity('validateLogin', true);
+                            scope.loginSpin = false;
+                            scope.loginCheck = true;
+                        }
+                    });
             }
         }
     };
 }]);
 
+LoginController.$inject = ['$scope', '$http', '$localStorage', '$location', '$window', '$cookies', '$translate'];
 
+app.component("login", {
+    templateUrl: '/components/login.html',
+    controller: LoginController
+});

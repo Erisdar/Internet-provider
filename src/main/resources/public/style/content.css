@@ -1,0 +1,15 @@
+.header-container {
+    position: relative;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-width: 100%;
+    font-size: 30px;
+    height: 100%;
+    font-family: 'Amatic SC', cursive;
+}
+
+.content-container {
+    height: 100%;
+    width: 100%;
+}
