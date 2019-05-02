@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
   {
 
     val patterns = new String[] {
-      "/", "/app/**/*", "/components/*", "/style/**/*", "/img/**/*", "/locale/**/*", "/users/search/login",
+      "/", "/app/**/*", "/components/**/*", "/style/**/*", "/img/**/*", "/users/search/login",
       "/users/search/email", "/encrypt", "/login", "/signin"
     };
 
